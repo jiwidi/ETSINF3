@@ -14,7 +14,7 @@ int primo(Entero_grande n)
 
   if (p) {
     s = sqrt(n);
-	t1 =omp_get_wtime();
+	
 	#pragma omp parallel private(i)
 	{
 		int numberOfThreads = omp_get_num_threads();
@@ -31,15 +31,15 @@ int primo(Entero_grande n)
 
 int main()
 {
-  Entero_grande n;
+  	Entero_grande n;
 	
 	t1 =omp_get_wtime();
-  for (n = ENTERO_MAS_GRANDE; !primo(n); n -= 2) {
+  	for (n = ENTERO_MAS_GRANDE; !primo(n); n -= 2) {
     /* NADA */
-  }
-t2=omp_get_wtime();
-printf("none\t%f\t%d\n", t2-t1, omp_get_num_threads());
-  printf("El mayor primo que cabe en %d bytes es %llu.\n",
+  	}
+	t2=omp_get_wtime();
+	printf("none\t%f\t%d\n", t2-t1, omp_get_num_threads());
+  	printf("El mayor primo que cabe en %d bytes es %llu.\n",
          sizeof(Entero_grande), n);
 
   return 0;
