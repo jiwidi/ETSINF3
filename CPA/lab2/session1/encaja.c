@@ -112,17 +112,23 @@ void encaja(Imagen *ima)
   const long unsigned grande = 1 + ima->ancho * 768ul;
 
   n = ima->alto - 2;
+  
   for (i = 0; i < n; i++) {
     /* Buscamos la linea que mas se parece a la i y la ponemos en i+1 */
     distancia_minima = grande;
-    #pragma omp parallel for private(distancia,x)
+    #pragma omp parallel for private(distancia, x)
     for (j = i + 1; j < ima->alto; j++) {
       distancia = 0;
       for (x = 0; x < ima->ancho; x++)
         distancia += diferencia(&A(x, i), &A(x, j));
       if (distancia < distancia_minima) {
-        distancia_minima = distancia;
-        linea_minima = j;
+        #pragma omp critical
+        {
+        if (distancia < distancia_minima) {
+            distancia_minima = distancia;
+            linea_minima = j;
+        }
+        }
       }
     }
     intercambia_lineas(ima, i+1, linea_minima);
@@ -159,9 +165,12 @@ int main(int argc, char *argv[])
 
   if (lee_ppm(entrada, &ima)) return 2;
   t1 = omp_get_wtime();
+  int threads;
   encaja(&ima);
   t2 = omp_get_wtime();
   if (escribir) if (escribe_ppm(salida, &ima)) return 3;
+  #pragma omp parallel
+  #pragma omp single
   printf("\t%f\t%d\n", t2 - t1, omp_get_num_threads());
   return 0;
 }
