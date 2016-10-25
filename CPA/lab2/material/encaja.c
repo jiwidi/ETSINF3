@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
   int escribir = 1;
   Imagen ima;
   char
-  *entrada = "/labos/asignaturas/ETSINF/cpa/p2/binLenna1024c.ppm",
+  *entrada = "binLenna1024c.ppm",
   *salida = "Lenna.ppm";
 
   while (*++argv) {

@@ -114,13 +114,16 @@ void encaja(Imagen *ima)
   n = ima->alto - 2;
   
   for (i = 0; i < n; i++) {
-    /* Buscamos la linea que mas se parece a la i y la ponemos en i+1 */
     distancia_minima = grande;
     #pragma omp parallel for private(distancia, x)
     for (j = i + 1; j < ima->alto; j++) {
       distancia = 0;
-      for (x = 0; x < ima->ancho; x++)
+      
+      for (x = 0; x < ima->ancho; x++){
         distancia += diferencia(&A(x, i), &A(x, j));
+        if(distancia> distancia_minima){break;}      
+      }
+
       if (distancia < distancia_minima) {
         #pragma omp critical
         {
