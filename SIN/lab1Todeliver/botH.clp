@@ -1,9 +1,10 @@
+(defglobal ?*nod-gen* = 0)
 (deffacts bot
     (grid 5 4)
     (max-bulbs 3)
     (warehouse 2 3)
     (max-level 0)
-    (robot 1 3 0 lamp 3 4 3 lamp 4 2 2 lamp 5 4 2 level 0))
+    (robot 1 3 0 lamp 3 4 3 level 0))
 
 ;============================================================
 ;================== HEURISTIC FUNCTIONS =====================
@@ -41,35 +42,18 @@
 (deffunction heur (?x ?y ?bur ?lamplist ?wx ?wy ?l)
     (bind ?*f* (+ 1 ?l (h ?x ?y ?bur ?lamplist ?wx ?wy))))
 
-(defrule init
-    (declare (salience 1000))
-=>
+(deffunction start ()
+    (reset)
+    (set-salience-evaluation when-activated)
     (printout t "Write the level of depth for the search: ")
     (bind ?num (read-number))
-    (assert (max-level ?num)))
+    (assert (max-level ?num))
+    (run))
+
 
 ;==========================================================================
-;============================ MOVEMENT FUNCTIONS ==========================
+;============================ MOVEMENT FUNCTIONS =========================
 ;==========================================================================
-
-(defrule up
-    (declare (salience (- 0 ?*f*)))
-    (robot ?x ?y ?bur $?mid level ?l)
-    (grid ?gx ?gy)
-    (test (< ?y ?gy))
-    (warehouse ?wx ?wy)
-    (test (heur ?x (+ 1 ?y) ?bur (create$ $?mid) ?wx ?wy ?l))
-=>
-    (assert (robot ?x (+ 1 ?y) ?bur $?mid level (+ 1 ?l))))
-
-(defrule down
-    (declare (salience (- 0 ?*f*)))
-    (robot ?x ?y ?bur $?mid level ?l)
-    (test (> ?y 1))
-    (warehouse ?wx ?wy)
-    (test (heur ?x (- ?y 1) ?bur (create$ $?mid) ?wx ?wy ?l))
-=>
-    (assert (robot ?x (- ?y 1) ?bur $?mid level (+ 1 ?l))))
 
 (defrule right
     (declare (salience (- 0 ?*f*)))
@@ -77,8 +61,11 @@
     (grid ?gx ?gy)
     (test (< ?x ?gx))
     (warehouse ?wx ?wy)
+    (max-level ?ml)
+    (test (< ?l ?ml))
     (test (heur (+ 1 ?x) ?y ?bur (create$ $?mid) ?wx ?wy ?l))
 =>
+    (bind ?*nod-gen* (+ ?*nod-gen* 1))
     (assert (robot (+ 1 ?x) ?y ?bur $?mid level (+ 1 ?l))))
 
 
@@ -87,18 +74,48 @@
     (robot ?x ?y ?bur $?mid level ?l)
     (test (> ?x 1))
     (warehouse ?wx ?wy)
+    (max-level ?ml)
+    (test (< ?l ?ml))
     (test (heur (- ?x 1) ?y ?bur (create$ $?mid) ?wx ?wy ?l))
 =>
+    (bind ?*nod-gen* (+ ?*nod-gen* 1))
     (assert (robot (- ?x 1) ?y ?bur $?mid level (+ 1 ?l))))
 
+(defrule up
+    (declare (salience (- 0 ?*f*)))
+    (robot ?x ?y ?bur $?mid level ?l)
+    (grid ?gx ?gy)
+    (test (< ?y ?gy))
+    (warehouse ?wx ?wy)
+    (max-level ?ml)
+    (test (< ?l ?ml))
+    (test (heur ?x (+ 1 ?y) ?bur (create$ $?mid) ?wx ?wy ?l))
+=>
+    (bind ?*nod-gen* (+ ?*nod-gen* 1))
+    (assert (robot ?x (+ 1 ?y) ?bur $?mid level (+ 1 ?l))))
+
+(defrule down
+    (declare (salience (- 0 ?*f*)))
+    (robot ?x ?y ?bur $?mid level ?l)
+    (test (> ?y 1))
+    (warehouse ?wx ?wy)
+    (max-level ?ml)
+    (test (< ?l ?ml))
+    (test (heur ?x (- ?y 1) ?bur (create$ $?mid) ?wx ?wy ?l))
+=>
+    (bind ?*nod-gen* (+ ?*nod-gen* 1))
+    (assert (robot ?x (- ?y 1) ?bur $?mid level (+ 1 ?l))))
 (defrule load
     (declare (salience (- 0 ?*f*)))
     (robot ?x ?y ?bur $?mid level ?l)
     (max-bulbs ?mb)
     (test (< ?bur ?mb))
     (warehouse ?x ?y)
+    (max-level ?ml)
+    (test (< ?l ?ml))
     (test (heur ?x ?y ?mb (create$ $?mid) ?x ?y ?l))
 =>
+    (bind ?*nod-gen* (+ ?*nod-gen* 1))
     (assert(robot ?x ?y ?mb $?mid level (+ 1 ?l))))
 
 (defrule replace
@@ -106,8 +123,11 @@
     ?f <- (robot ?x ?y ?bur $?mid1 lamp ?x ?y ?bul $?mid2 level ?l)
     (test (>= ?bur ?bul))
     (warehouse ?wx ?wy)
+    (max-level ?ml)
+    (test (< ?l ?ml))
     (test (heur ?x ?y (- ?bur ?bul) (create$ $?mid1 $?mid2) ?wx ?wy ?l))
 =>
+    (bind ?*nod-gen* (+ ?*nod-gen* 1))
     (assert (robot ?x ?y (- ?bur ?bul) $?mid1 $?mid2 level (+ 1 ?l))))
 
 ;=============================================================
@@ -121,7 +141,8 @@
     (max-level ?ml)
     (test (< ?l ?ml))
 =>
-    (printout t "Solution found, all lamps with lamps at level: " ?l crlf)
+    (printout t "Solution found, all lamps with bulls at level: " ?l crlf)
+    (printout t "Nodes generated: " ?*nod-gen* crlf)
     (halt)
 )
 
