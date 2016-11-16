@@ -1,96 +1,91 @@
-(deffacts bot
+(deffacts robot
     (grid 5 4)
-    (max-bulbs 3)
     (warehouse 2 3)
-    (max-level 0)
-    (robot 1 3 0 lamp 3 4 3 lamp 4 2 2 lamp 5 4 2 level 0 fact -1))
+    (robot 1 3 0 lamp 3 4 3 lamp 4 2 2 lamp 5 4 2 level 0)
+    (max-bulbs 3)
+)
 
 (defrule init
-    (declare (salience 100))
-    ?f <- (max-level 0)
+    (declare (salience 1000))
 =>
-    (printout t "Input the maximum level: ")
-    (bind ?s (read-number))
-    (retract ?f)
-    (assert (max-level ?s)))
-
-(defrule right
-    ?f <- (robot ?x ?y $?z level ?l fact ?)
-    (grid ?mx ?my)
-    (test (< ?x ?mx))
-=>
-    (assert (robot (+ 1 ?x) ?y $?z level (+ 1 ?l) fact (fact-index ?f))))
-
-(defrule left
-    ?f <- (robot ?x ?y $?z level ?l fact ?)
-    (test (> ?x 1))
-=>
-    (assert (robot (- ?x 1) ?y $?z level (+ 1 ?l) fact (fact-index ?f))))
+    (printout t "Write the level of depth for the search")
+    (bind ?num (read-number))
+    (assert (max-level ?num)))
 
 (defrule up
-    ?f <- (robot ?x ?y $?z level ?l fact ?)
-    (grid ?mx ?my)
-    (test (< ?y ?my))
+    (robot ?x ?y ?b $?mid level ?l)
+    (max-level ?ml)
+    (test (< ?l ?ml))
+    (grid ?gx ?gy)
+    (test (< ?y ?gy))
 =>
-    (assert (robot ?x (+ 1 ?y) $?z level (+ 1 ?l) fact (fact-index ?f))))
+    (assert (robot ?x (+ ?y 1) ?b $?mid level (+ ?l 1)))
+)
 
 (defrule down
-    ?f <- (robot ?x ?y $?z level ?l fact ?)
+    (robot ?x ?y ?b $?mid level ?l)
+    (max-level ?ml)
+	(test (< ?l ?ml))
+    (grid ?gx ?gy)
     (test (> ?y 1))
+    
 =>
-    (assert (robot ?x (- ?y 1) $?z level (+ 1 ?l) fact (fact-index ?f))))
+    (assert (robot ?x (- ?y 1) ?b $?mid level (+ ?l 1)))
+)
 
+(defrule right
+    (robot ?x ?y ?b $?mid level ?l)
+    (max-level ?ml)
+	(test (< ?l ?ml))
+    (grid ?gx ?gy)
+    (test (< ?x ?gx))
+=>
+    (assert (robot (+ ?x 1) ?y ?b $?mid level (+ ?l 1)))
+)
+
+(defrule left
+    (robot ?x ?y ?b $?mid level ?l)
+    (max-level ?ml)
+	(test (< ?l ?ml))
+    (grid ?gx ?gy)
+    (test (> ?x 1))
+=>
+    (assert (robot (- ?x 1) ?y ?b $?mid level (+ ?l 1)))
+)
 
 (defrule load
-    (declare (salience 10))
-    ?f <- (robot ?x ?y ?b $?z level ?l fact ?)
+    (robot ?x ?y ?bur $?mid level ?l)
+    (max-level ?ml)
+	(test (< ?l ?ml))
     (warehouse ?x ?y)
     (max-bulbs ?mb)
-    (test (< ?b ?mb))
+    (test (< ?bur ?mb))
 =>
-    (assert(robot ?x ?y ?mb $?z level (+ 1 ?l) fact (fact-index ?f))))
+    (assert (robot ?x ?y ?mb $?mid level (+ ?l 1)))
+)
 
 (defrule replace
-    (declare (salience 10))
-    ?f <- (robot ?x ?y ?b1 $?rest1 lamp ?x ?y ?b2 $?rest2 level ?l fact ?)
-    (test (>= ?b1 ?b2))
+    (robot ?x ?y ?bur $?mid1 lamp ?x ?y ?bul $?mid2 level ?l)
+    (max-level ?ml)
+    (test (< ?l ?ml))
+    (test (<= ?bul ?bur))
 =>
-    (assert (robot ?x ?y (- ?b1 ?b2) $?rest1 $?rest2 level (+ 1 ?l) fact (fact-index ?f))))
-
-(defrule duplicate
-    (declare (salience 30))
-    ?f <- (robot $?rest level ?l1 $?)
-    ?g <- (robot $?rest level ?l2 $?)
-    (test (!= ?l1 ?l2))
-=>
-    (if (< ?l1 ?l2) then
-        (retract ?g)
-    else
-        (retract ?f)))
-
-(defrule duplicateprev
-    (declare (salience 30))
-    ?f <- (robot $?rest fact ?f1)
-    ?g <- (robot $?rest fact ?f2)
-    (test (!= ?f1 ?f2))
-=>
-    (if (< ?f1 ?f2) then
-        (retract ?g)
-    else
-        (retract ?f)))
+    (assert (robot ?x ?y (- ?bur ?bul) $?mid1 $?mid2 level (+ ?l 1)))
+)
 
 (defrule goal
     (declare (salience 20))
-    (robot ?x ?y ? level ?l fact ?)
-=>
-    (printout t "All lamps fixed! At level " ?l crlf)
-    (halt))
-
-(defrule lose
-    (declare (salience -10))
+    (robot ?x ?y ?b level ?l)
     (max-level ?ml)
-    (robot $? level ?l $?)
-    (test (>= ?l ?ml))
+	(test (< ?l ?ml))
 =>
-    (printout t "Reached max level" crlf)
-    (halt))
+    (printout t "Solution found, all lamps with lamps at level: " ?l crlf)
+    (halt)
+)
+
+(defrule lost
+    (declare (salience -100))
+=>
+    (printout t "Maximum level reached, stoping" crlf)
+    (halt)
+)
