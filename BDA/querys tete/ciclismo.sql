@@ -1,0 +1,224 @@
+--9
+select min(altura),max(altura)
+from puerto;
+--10
+select p.nompuerto,p.categoria
+from puerto p,ciclista c
+where p.dorsal=c.dorsal
+and c.nomeq='Banesto';
+--11
+select p.nompuerto,p.netapa,e.km
+from puerto p,etapa e
+where e.netapa=p.netapa;
+--12
+select distinct eq.nomeq,eq.director
+from equipo eq,ciclista c
+where eq.nomeq=c.nomeq
+and c.edad>33;
+--13
+select distinct c.nombre,m.color
+from ciclista c,llevar l,maillot m
+where c.dorsal=l.dorsal
+and l.codigo=m.codigo;
+--14
+select distinct c.nombre,e.netapa
+from ciclista c, llevar l,etapa e,maillot m
+where c.dorsal=e.dorsal
+and c.dorsal=l.dorsal
+and m.codigo=l.codigo
+and m.color='Amarillo';
+--15
+select et.netapa
+from etapa et,etapa et2
+where et.netapa=et2.netapa+1
+and et.salida <> et2.llegada;
+--16
+select netapa,salida
+from etapa
+where netapa not in(
+  select netapa 
+  from puerto
+  );
+--17
+select avg(edad)
+from ciclista
+where dorsal in(
+  select dorsal
+  from etapa
+  );
+--18
+select nompuerto
+from puerto
+where altura>(
+  select avg(altura)
+  from puerto
+  );
+--19
+select salida,llegada
+from etapa
+where netapa=(
+  select netapa
+  from puerto
+  where pendiente in(
+    select max(pendiente)
+    from puerto
+    )
+    );
+--20
+select dorsal,nombre
+from ciclista
+where dorsal in (
+  select dorsal
+  from puerto
+  where altura in(
+    select max(altura)
+    from puerto
+    )
+    );
+--21
+select nombre
+from ciclista
+where edad=(
+  select min(edad)
+  from ciclista
+  );
+--22
+select nombre
+from ciclista,etapa h
+where edad=(
+  select min(edad)
+  from ciclista,etapa e
+  where e.dorsal=ciclista.dorsal
+  )
+and ciclista.dorsal=h.dorsal;
+--23
+select distinct nombre
+from ciclista c
+where 1<(
+  select count(c1.dorsal)
+  from ciclista c1,puerto p
+  where c1.dorsal=p.dorsal
+  and c.dorsal=c1.dorsal
+  );
+--24
+select netapa
+from etapa et
+where not exists(
+  select nompuerto
+  from puerto
+  where puerto.netapa=et.netapa
+  and puerto.altura<700
+  )
+and exists(
+  select nompuerto
+  from puerto
+  where puerto.netapa=et.netapa
+  and puerto.altura>700);
+--25
+select nomeq,director
+from equipo
+where not exists(
+  select *
+  from ciclista
+  where ciclista.nomeq=equipo.nomeq
+  and ciclista.edad<=25
+  )
+and exists(
+  select *
+  from ciclista
+  where ciclista.nomeq=equipo.nomeq
+  and ciclista.edad>25
+  );
+--26
+select c.dorsal,c.nombre
+from ciclista c
+where not exists(
+  select netapa
+  from etapa
+  where etapa.dorsal=c.dorsal
+  and km<=170)
+and exists(select netapa
+  from etapa
+  where etapa.dorsal=c.dorsal
+  and km>170);
+--27
+select c.nombre
+from ciclista c
+where not exists(
+  select ne.netapa
+  from etapa ne
+  where ne.dorsal=c.dorsal
+  and not exists(
+    select nompuerto
+    from puerto
+    where puerto.netapa=ne.netapa
+    and puerto.dorsal=c.dorsal)
+    )
+and exists(
+  select ne.netapa
+  from etapa ne
+  where ne.dorsal=c.dorsal
+  and not exists(
+    select nompuerto
+    from puerto
+    where puerto.netapa=ne.netapa
+    and puerto.dorsal <> c.dorsal)
+    );
+--28
+select e.nomeq
+from equipo e
+where not exists(
+  select c.dorsal
+  from ciclista c 
+  where c.dorsal not in(
+    select dorsal
+    from llevar
+    )
+  and c.nomeq=e.nomeq
+  and c.dorsal not in(
+    select dorsal
+    from puerto
+    )
+  )
+and exists(
+  select c.dorsal
+  from ciclista c
+  where c.nomeq=e.nomeq
+  );
+--29
+select m.codigo,m.color
+from maillot m
+where not exists(
+  select c.dorsal
+  from ciclista c,ciclista c2,llevar l,llevar l2
+  where c.dorsal=l.dorsal
+  and c2.dorsal=l2.dorsal
+  and c.dorsal <> c2.dorsal
+  and l.codigo=m.codigo
+  and l2.codigo=m.codigo
+  and c.nomeq <> c2.nomeq
+ )
+and exists(
+  select *
+  from ciclista c,llevar l
+  where c.dorsal=l.dorsal
+  and l.codigo=m.codigo
+  );
+--30
+select e.nomeq
+from equipo e
+where not exists(
+  select c.dorsal
+  from ciclista c,puerto p
+  where c.nomeq=e.nomeq
+  and p.dorsal=c.dorsal
+  and p.categoria <> '1'
+  )
+and exists(
+  select c.dorsal
+  from ciclista c,puerto p
+  where c.nomeq=e.nomeq
+  and p.dorsal=c.dorsal
+  and p.categoria ='1'
+  )
+    
