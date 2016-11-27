@@ -220,5 +220,144 @@ and exists(
   where c.nomeq=e.nomeq
   and p.dorsal=c.dorsal
   and p.categoria ='1'
-  )
-    
+  );
+--31
+select e.netapa,count(p.nompuerto)
+from etapa e,puerto p
+where p.netapa=e.netapa
+group by e.netapa;
+--32
+select e.nomeq,count(c.dorsal)
+from equipo e, ciclista c
+where e.nomeq=c.nomeq
+group by e.nomeq;
+--33
+select nomeq,count(nomeq)
+from equipo left join ciclista c using(nomeq)
+group by nomeq;
+--34
+select e.director,e.nomeq
+from equipo e
+where 4>(
+  select count(c.dorsal)
+  from ciclista c
+  where c.nomeq=e.nomeq)
+and 30>=(
+  select avg(edad)
+  from ciclista c
+  where c.nomeq=e.nomeq);
+--35
+select c.nombre
+from ciclista c,equipo e,etapa p
+where c.nomeq=e.nomeq
+and c.dorsal=p.dorsal
+and (select count(*) from ciclista c2 where c2.nomeq=e.nomeq)>5
+group by c.nombre;
+--36
+select c.nomeq,avg(c.edad)
+from  ciclista c
+group by c.nomeq
+having avg(c.edad)>=ALL(
+  select avg(c.edad)
+  from  ciclista c
+  group by c.nomeq);
+--37
+select e.director
+from equipo e
+where (
+  select count(*) from llevar l, ciclista c where c.nomeq=e.nomeq and l.dorsal=c.dorsal)>=ALL(
+  select count(*) from llevar ,ciclista where llevar.dorsal=ciclista.dorsal group by nomeq);
+--38
+select distinct m.color,m.codigo
+from maillot m,ciclista c,llevar l,etapa e
+where m.codigo=l.codigo
+and l.dorsal <> e.dorsal;
+--39
+select e.netapa,e.salida,e.llegada
+from etapa e
+where km>190
+and 1<(
+  select count(*)
+  from puerto p
+  where p.netapa=e.netapa
+  );
+--40
+select c.dorsal,c.nombre
+from ciclista c
+where exists(
+  select codigo
+  from llevar l
+  where l.dorsal=20
+  and l.codigo not in(
+    select l2.codigo
+    from llevar l2
+    where l2.dorsal=c.dorsal
+    )
+    );
+--41
+select distinct c.dorsal,c.nombre
+from ciclista c
+where exists(
+  select l.codigo
+  from llevar l
+  where c.dorsal=l.dorsal
+  and l.codigo in(
+    select l2.codigo
+    from llevar l2
+    where l2.dorsal=20
+    )
+    );
+--42
+select c.dorsal,c.nombre
+from ciclista c
+where not exists(
+  select l.codigo
+  from llevar l
+  where l.dorsal=c.dorsal
+  and l.codigo in(
+    select l2.codigo
+    from llevar l2
+    where l2.dorsal=20
+    )
+    );
+--43
+select c.dorsal,c.nombre
+from ciclista c
+where not exists(
+    select l.codigo
+    from llevar l
+    where l.dorsal=20
+    and l.codigo not in
+    (
+      select l2.codigo
+      from llevar l2
+      where l2.dorsal=c.dorsal
+    )
+    );
+--44
+select c.dorsal,c.nombre
+from ciclista c
+where not exists(
+    select l.codigo
+    from llevar l
+    where l.dorsal=20
+    and l.codigo not in
+    (
+      select l2.codigo
+      from llevar l2
+      where l2.dorsal=c.dorsal
+    )
+    )
+and not exists(
+  select l.codigo
+  from llevar l
+  where l.dorsal=c.dorsal
+  and l.codigo in(
+    select l2.codigo
+    from llevar l2
+    where l2.dorsal=20
+    )
+    );
+--45
+select c.nombre,c.dorsal
+from 
