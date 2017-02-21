@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      2320,         71]
-NotebookOptionsPosition[      2075,         58]
-NotebookOutlinePosition[      2422,         73]
-CellTagsIndexPosition[      2379,         70]
+NotebookDataLength[      3654,        102]
+NotebookOptionsPosition[      3409,         89]
+NotebookOutlinePosition[      3756,        104]
+CellTagsIndexPosition[      3713,        101]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -24,7 +24,7 @@ Cell[BoxData[
   RowBox[{"Module", "[", 
    RowBox[{
     RowBox[{"{", 
-     RowBox[{"result", ",", "prod", ",", "antec"}], "}"}], ",", 
+     RowBox[{"result", ",", "prod", ",", "antec", ",", "aux"}], "}"}], ",", 
     "\[IndentingNewLine]", 
     RowBox[{
      RowBox[{"result", "=", 
@@ -46,15 +46,46 @@ Cell[BoxData[
         "\[IndentingNewLine]", 
         RowBox[{"If", "[", 
          RowBox[{
-          RowBox[{"UpperCaseQ", "[", "antec", "]"}], ","}], 
-         "\[IndentingNewLine]", "\[IndentingNewLine]", "]"}], ";"}]}], 
-      RowBox[{"(*", "if", "*)"}], "\[IndentingNewLine]", "]"}], ";", 
-     RowBox[{"(*", " ", "for", " ", "*)"}], "\[IndentingNewLine]", 
-     RowBox[{"Return", "[", "result", "]"}], ";"}]}], "\[IndentingNewLine]", 
-   "]"}]}]], "Input",
+          RowBox[{"UpperCaseQ", "[", "antec", "]"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"For", "[", 
+            RowBox[{
+             RowBox[{"o", "=", "2"}], ",", 
+             RowBox[{
+              RowBox[{"o", "\[LessEqual]", " ", 
+               RowBox[{"Length", "[", "prod", "]"}]}], " ", "&&", " ", 
+              "aux"}], ",", 
+             RowBox[{"o", "++"}], ",", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"UpperCaseQ", "[", 
+                 RowBox[{
+                  RowBox[{"prod", "[", 
+                   RowBox[{
+                    RowBox[{"[", "i", "]"}], "[", "o", "]"}], "]"}], ",", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{
+                   RowBox[{"aux", "=", "false"}], ";"}]}], 
+                 "\[IndentingNewLine]", "]"}], ";"}], 
+               RowBox[{"(*", "if", "*)"}], "\[IndentingNewLine]", 
+               "\[IndentingNewLine]", "]"}], ";", 
+              RowBox[{"(*", "for", "*)"}], "\[IndentingNewLine]", 
+              "\[IndentingNewLine]", " ", 
+              RowBox[{"Append", "[", 
+               RowBox[{"result", ",", 
+                RowBox[{"prod", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}]}], "\[IndentingNewLine]", 
+               "]"}], ";"}]}], 
+            RowBox[{"(*", "if", "*)"}], "\[IndentingNewLine]", "]"}], ";", 
+           RowBox[{"(*", " ", "for", " ", "*)"}], "\[IndentingNewLine]", 
+           RowBox[{"Return", "[", "result", "]"}], ";"}]}], 
+         "\[IndentingNewLine]", "]"}]}]}]}]}]}]}]}]], "Input",
  CellChangeTimes->{{3.69614632173588*^9, 3.6961463762085533`*^9}, {
   3.696146430216942*^9, 3.6961464588432503`*^9}, {3.696146623729385*^9, 
-  3.696146624362835*^9}, {3.6961467080495653`*^9, 3.6961467604067287`*^9}}]
+  3.696146624362835*^9}, {3.6961467080495653`*^9, 3.6961467604067287`*^9}, {
+  3.696306117002495*^9, 3.69630654993846*^9}}]
 },
 WindowSize->{650, 716},
 WindowMargins->{{Automatic, -7}, {Automatic, 0}},
@@ -72,10 +103,8 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 1513, 36, 293, "Input"]
+Cell[558, 20, 2847, 67, 480, "Input"]
 }
 ]
 *)
-
-(* End of internal cache information *)
 
