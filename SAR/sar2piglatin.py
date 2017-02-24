@@ -5,11 +5,19 @@ def main():
     print(parameters[1])
     if( parameters[1] == '-f' ):
         print("h")
+        signos=(",", ",", ";", "?", "!");
         infile=open(parameters[2],'r')
         texto=infile.read()
         Output=parameters[0].replace(".py","piglatin.py")
-        listapalabras=texto.split()
-        print(listapalabras[1])
+        listafrases=texto.split("\n")
+        print(listafrases[0])
+        for u in listafrases:
+            listapalabras=u.split(signos)
+            for i in listapalabras:
+                if(not u.startswith()):
+                    
+
+
         
 
 
