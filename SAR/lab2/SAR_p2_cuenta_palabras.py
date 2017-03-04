@@ -23,9 +23,13 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     palabras=texto.split(' ')
     signos = (".", ",", ";", "?", "!")
     for idx,palabra in enumerate(palabras):
+        if(to_lower):
+            palabras[idx]=palabra.lower()
+    for idx, palabra in enumerate(palabras):
         if palabra[len(palabra)-1] in signos:
             palabras[idx]=palabra[:len(palabra)-1]
-            
+            print(palabra[:len(palabra)-1])
+
     npalabras=len(palabras)
     if(remove_stopwords):
         npalabrassw=0
