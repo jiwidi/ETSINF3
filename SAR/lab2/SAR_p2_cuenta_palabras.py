@@ -3,6 +3,7 @@
 
 from operator import itemgetter
 from collections import Counter
+from collections import OrderedDict
 import re
 import sys
 
@@ -10,10 +11,13 @@ clean_re = re.compile('\W+')
 def clean_text(text):
     return clean_re.sub(' ', text)
 
-def sort_dic(d):
+def sort_dicFr(d):
     for key, value in sorted(sorted(d.items()), key=itemgetter(1), reverse=True):
-        yield key, value
-
+        print('      ',key,value)
+        #yield key, value
+def sort_dicA(d):
+    for key, value in sorted(d.items()):
+        print('      ',key,value)
 def text_statistics(filename, to_lower=True, remove_stopwords=True):
     file=open(filename,'r')
     stopwords=open('stopwords_en.txt','r')
@@ -46,11 +50,15 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     print('Vocabulary size: '+str(vocabulario))
     print('Number of symbols: '+str(simbolos))
     print('Number of different symbols: '+str(simbolosDist))
-    for key in diccionario:
-        print(key+' '+str(diccionario[key]))
-
-
-
+    print('Words (alphabetical order):')
+    sort_dicA(diccionario)
+    print('Words (frequency order):')
+    sort_dicFr(diccionario)
+    diccionarioLetras=Counter(letras)
+    print('Symbols (alphabetical order')
+    sort_dicA(diccionarioLetras)
+    print('Symbols (frequency order):')
+    sort_dicFr(diccionarioLetras)
 def syntax():
     print ("\n%s filename.txt [to_lower?[remove_stopwords?]\n" % sys.argv[0])
     sys.exit()
