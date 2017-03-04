@@ -3,7 +3,6 @@
 
 from operator import itemgetter
 from collections import Counter
-from collections import OrderedDict
 import re
 import sys
 
