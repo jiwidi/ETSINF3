@@ -19,8 +19,8 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     stopwords=open('stopwords_en.txt','r')
     listaSwords=stopwords.read().split('\n')
     texto=file.read()
-    nlineas=len(texto.split('\n'))
-    palabras=texto.split(' ')
+    nlineas=len(list(filter(lambda x: x!='',texto.split('\n'))))
+    palabras=texto.split()
     signos = (".", ",", ";", "?", "!")
     for idx,palabra in enumerate(palabras):
         if(to_lower):
@@ -28,8 +28,6 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     for idx, palabra in enumerate(palabras):
         if palabra[len(palabra)-1] in signos:
             palabras[idx]=palabra[:len(palabra)-1]
-            print(palabra[:len(palabra)-1])
-
     npalabras=len(palabras)
     if(remove_stopwords):
         npalabrassw=0
@@ -37,7 +35,7 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
             if(palabra not in listaSwords):
                 npalabrassw=+1
     vocabulario=len(set(palabras))
-    letras = list(filter(lambda x: x != ' ', texto))
+    letras = list(filter(lambda x: x.isalpha(), texto))
     simbolos=len(letras)
     simbolosDist=len(set(letras))
     diccionario=Counter(palabras)
