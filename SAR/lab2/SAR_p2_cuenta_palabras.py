@@ -47,7 +47,7 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     print('Number of symbols: '+str(simbolos))
     print('Number of different symbols: '+str(simbolosDist))
     for key in diccionario:
-        print(key+str(diccionario[key]))
+        print(key+' '+str(diccionario[key]))
 
 
 
