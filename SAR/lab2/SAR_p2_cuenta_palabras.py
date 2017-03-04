@@ -26,12 +26,11 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     nlineas=len(list(filter(lambda x: x!='',texto.split('\n'))))
     palabras=texto.split()
     signos = (".", ",", ";", "?", "!")
-    if(to_lower):
-        for idx,palabra in enumerate(palabras):
-            palabras[idx]=palabra.lower()
     for idx, palabra in enumerate(palabras):
         if palabra[len(palabra)-1] in signos:
             palabras[idx]=palabra[:len(palabra)-1]
+        if(to_lower):
+            palabras[idx]=palabras[idx].lower()
     npalabras=len(palabras)
     if(remove_stopwords):
         palabras=list(filter(lambda x: x not in listaSwords,palabras))
