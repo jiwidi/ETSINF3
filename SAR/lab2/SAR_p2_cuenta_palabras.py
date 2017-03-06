@@ -3,6 +3,7 @@
 
 from operator import itemgetter
 from collections import Counter
+from collections import defaultdict
 import re
 import sys
 
@@ -22,7 +23,8 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     stopwords=open('stopwords_en.txt','r')
     listaSwords=stopwords.read().split('\n')
     texto=file.read()
-    nlineas=len(list(filter(lambda x: x!='',texto.split('\n'))))
+    frases=list(filter(lambda x: x!='',texto.split('\n')))
+    nlineas=len(frases)
     palabras=texto.split()
     signos = (".", ",", ";", "?", "!")
     for idx, palabra in enumerate(palabras):
@@ -55,6 +57,17 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     sort_dicA(diccionarioLetras)
     print('Symbols (frequency order):')
     sort_dicFr(diccionarioLetras)
+    #Ampliacion
+    for idx,frase in enumerate(frases):
+        diccionarioBigramas = {}
+        diccionarioBigramas = defaultdict(lambda: 0, diccionarioBigramas)
+        frase='$ '+frase+' $'
+        palabrasF=frase.split()
+        for counter in range(len(palabrasF)-1):
+            diccionarioBigramas[palabrasF[counter]+' + '+palabrasF[counter+1]]+=1
+        print('Analysis of bigrams from sentence: '+str(idx)+' (alphabetically)')
+        sort_dicA(diccionarioBigramas)
+
 def syntax():
     print ("\n%s filename.txt [to_lower?[remove_stopwords?]\n" % sys.argv[0])
     sys.exit()
