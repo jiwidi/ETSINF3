@@ -36,7 +36,8 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     if(remove_stopwords):
         palabras=list(filter(lambda x: x not in listaSwords,palabras))
     npalabrassw=len(palabras)
-    vocabulario=len(set(palabras))
+    vocabulario=set(palabras)
+    nvocabulario=len(set(palabras))
     letras = list(filter(lambda x: x.isalpha(), "".join(palabras)))
     simbolos=len(letras)
     simbolosDist=len(set(letras))
@@ -45,7 +46,7 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
     print('Number of words (with stopwords): '+str(npalabras))
     if(remove_stopwords):
         print('Number of words (without stopwords): '+str(npalabrassw))
-    print('Vocabulary size: '+str(vocabulario))
+    print('Vocabulary size: '+str(nvocabulario))
     print('Number of symbols: '+str(simbolos))
     print('Number of different symbols: '+str(simbolosDist))
     print('Words (alphabetical order):')
@@ -69,7 +70,15 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
         sort_dicA(diccionarioBigramas)
         print('Analysis of bigrams from sentence: '+str(idx)+' (frequency order)')
         sort_dicFr(diccionarioBigramas)
-
+    for idx,palabra in enumerate(vocabulario):
+        diccionarioBigramas = {}
+        diccionarioBigramas = defaultdict(lambda: 0, diccionarioBigramas)
+        for counter in range(len(palabra)-1):
+            diccionarioBigramas[palabra[counter]+' + '+palabra[counter+1]]+=1
+        print('Analysis of bigrams from word: '+palabra+' (alphabetical order)')
+        sort_dicA(diccionarioBigramas)
+        print('Analysis of bigrams from word: '+palabra+' (frequency order)')
+        sort_dicFr(diccionarioBigramas)
 
 def syntax():
     print ("\n%s filename.txt [to_lower?[remove_stopwords?]\n" % sys.argv[0])
