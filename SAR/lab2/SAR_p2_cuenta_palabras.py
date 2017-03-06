@@ -65,8 +65,11 @@ def text_statistics(filename, to_lower=True, remove_stopwords=True):
         palabrasF=frase.split()
         for counter in range(len(palabrasF)-1):
             diccionarioBigramas[palabrasF[counter]+' + '+palabrasF[counter+1]]+=1
-        print('Analysis of bigrams from sentence: '+str(idx)+' (alphabetically)')
+        print('Analysis of bigrams from sentence: '+str(idx)+' (alphabetical order)')
         sort_dicA(diccionarioBigramas)
+        print('Analysis of bigrams from sentence: '+str(idx)+' (frequency order)')
+        sort_dicFr(diccionarioBigramas)
+
 
 def syntax():
     print ("\n%s filename.txt [to_lower?[remove_stopwords?]\n" % sys.argv[0])
