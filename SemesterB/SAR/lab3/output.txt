@@ -1,0 +1,23 @@
+$  2  {'egg': 1}
+a  2  {'mornay': 1, 'fried': 1}
+and  12  {'bacon': 2, 'spam': 9, 'a': 1}
+aux  1  {'crevettes': 1}
+bacon  6  {'egg': 2, 'and': 2, 'sausage': 2}
+baked  1  {'beans': 1}
+beans  1  {'spam': 1}
+brandy  1  {'and': 1}
+crevettes  1  {'with': 1}
+egg  9  {'and': 3, 'sausage': 2, 'bacon': 2, 'spam': 1, 'on': 1}
+fried  1  {'egg': 1}
+garnished  1  {'with': 1}
+lobster  1  {'thermidor': 1}
+mornay  1  {'sauce': 1}
+on  1  {'top': 1}
+pate  1  {'brandy': 1}
+sauce  1  {'garnished': 1}
+sausage  4  {'and': 4}
+spam  27  {'spam': 16, 'egg': 5, 'bacon': 2, 'baked': 1, 'and': 1, 'lobster': 1, '$': 1}
+thermidor  1  {'aux': 1}
+top  1  {'and': 1}
+truffle  1  {'pate': 1}
+with  2  {'a': 1, 'truffle': 1}

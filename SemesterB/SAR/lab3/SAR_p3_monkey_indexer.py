@@ -1,20 +1,15 @@
 from collections import defaultdict
+from operator import itemgetter
 import sys
 import pickle
-def sort_subDicc(diccionario):
-    r=""
-    for key,value in sorted(diccionario.items()):
-        r+='('+key+','+"'"+str(value)+"'"+'), '
-    r=r[:len(r)-2]
-    r='['+r+']'
-    return r
+import re
 def print_dicc(diccionario):
     f = open(sys.argv[2], 'w')
     for key, value in sorted(diccionario.items()):
         cont=value[0]
         dic=value[1]
-        f.write(key+'  '+str(cont)+'  '+sort_subDicc(dic)+'\n')
-        print('      ',key,cont,sort_subDicc(dic))
+        f.write(key+'  '+str(cont)+'  '+str(dic)+'\n')
+        print('      ',key,cont,str(["%s,%s" %(key,value) for (key,value) in sorted(dic.items(), key=itemgetter(1), reverse=True)]))
 
 def load_object(file_name):
     with open(file_name, 'rb') as fh:
@@ -27,9 +22,10 @@ def main():
     signos= (".", ",", ";", "?", "!")
     parameters = sys.argv
     input = open(parameters[1], 'r').read()
-    frases = list(filter(lambda x: x!='',input.split('\n')))
+    #input.replace('\n\n','.')
+    frases = list(filter(lambda x: x!='',re.split('\.|\n\n ',input)))
     for idx, frase in enumerate(frases):
-        frases[idx] = '$ ' + frase +' $'
+        frases[idx] = ' $ ' + frase +' $ '
     diccionario = {}
     diccionario = defaultdict(lambda: [0, {}], diccionario)
     for frase in frases:
