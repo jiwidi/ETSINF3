@@ -4,16 +4,13 @@ import sys
 import ast
 import pickle
 import re
+def load_object(file_name):
+    with open(file_name, 'rb') as fh:
+        obj = pickle.load(fh)
+    return obj
+
 def main():
-    parameters=sys.argv
-    input=open(parameters[1],'r').read()
-    rows=list(filter(lambda x: x!='',input.split("\n")))
-    for row in rows:
-        row = row.split('  ')
-        diccionario = {}
-        diccionario = defaultdict(lambda: [0, {}], diccionario)
-        diccionario[row[0]]= [row[1],ast.literal_eval(row[2])]
-        print(str(diccionario[row[0]][1]))
+    diccionario=load_object(sys.argv[1])
 
 
 
