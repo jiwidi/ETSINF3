@@ -16,7 +16,7 @@ def generateSentences(diccionario,count,length):
         pal='$'
         for n in range(length):
             pal=generateWord(diccionario[pal][1])
-            text+=pal+' '
+            text+=pal.strip()+' '
             if(pal=='$'):
                 break
         output.write(text+'\n')

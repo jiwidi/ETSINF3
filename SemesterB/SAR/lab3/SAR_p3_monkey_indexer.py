@@ -14,7 +14,7 @@ def save_object(object, file_name):
         pickle.dump(object, fh)
 
 def main():
-    signos= (".", ",", ";", "?", "!")
+    signos= (".", ",", ";", "?", "!",'"',"'","?",":","(",")")
     parameters = sys.argv
     input = open(parameters[1], 'r').read()
     frases = list(filter(lambda x: x!='',re.split('\.|\n\n ',input)))
@@ -24,10 +24,11 @@ def main():
     for frase in frases:
         palabras = frase.split()
         for idx, palabra in enumerate(palabras):
-            if palabra[len(palabra) - 1] in signos:
-                palabras[idx] = palabra[:len(palabra) - 1].lower()
-            else:
-                palabras[idx]=palabra.lower()
+            for k in range(len(palabra)):
+                if palabra[k] in signos:
+                    palabras[idx] = palabra[:k].lower().strip()+palabra[k+1:].lower().strip()
+                else:
+                    palabras[idx]=palabra.lower().strip()
         for idx, palabra in enumerate(palabras):
             if(palabra in diccionario.keys()):
                 diccionario[palabra][0] += 1
@@ -38,7 +39,6 @@ def main():
                     diccionario[palabra][1][palabras[idx + 1]] += 1
                 else:
                     diccionario[palabra][1][palabras[idx + 1]] =1
-    print_dicc(diccionario)
     save_object(diccionario,parameters[2])
 
 
