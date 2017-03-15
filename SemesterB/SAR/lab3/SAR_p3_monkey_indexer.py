@@ -14,7 +14,7 @@ def save_object(object, file_name):
         pickle.dump(object, fh)
 
 def main():
-    signos= (".", ",", ";", "?", "!",'"',"'","?",":","(",")")
+    signos= (".", ",", ";", "?", "!",'"',"'",":","(",")")
     parameters = sys.argv
     input = open(parameters[1], 'r').read()
     frases = list(filter(lambda x: x!='',re.split('\.|\n\n ',input)))
