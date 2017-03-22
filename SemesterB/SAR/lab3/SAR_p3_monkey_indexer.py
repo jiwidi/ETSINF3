@@ -3,6 +3,7 @@ from operator import itemgetter
 import sys
 import pickle
 import re
+
 def print_dicc(diccionario):
     for key, value in sorted(diccionario.items()):
         cont=value[0]

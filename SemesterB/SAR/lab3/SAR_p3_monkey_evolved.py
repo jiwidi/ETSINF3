@@ -5,6 +5,7 @@ import ast
 import random
 import pickle
 import re
+
 def load_object(file_name):
     with open(file_name, 'rb') as fh:
         obj = pickle.load(fh)
