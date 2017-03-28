@@ -1,4 +1,3 @@
-from collections import defaultdict
 from operator import itemgetter
 import sys
 import pickle

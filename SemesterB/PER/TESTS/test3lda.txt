@@ -1,0 +1,15 @@
+1C,2B,3A
+
+
+2, pca puede hasta 100 dimensiones, nunca se proyecta a X 
+dimensiones y despues a Y siendo Y>X
+
+3,A 
+C, lda solo puede a 1 dimension
+D,con pca no se puede garantizar que la proyeccion resulte en 
+clases inealmente separables
+
+4,a-pca
+ b-pca,lda
+ c-ninguna
+ d-lda
