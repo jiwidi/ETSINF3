@@ -21,23 +21,24 @@ function [W]=lda(X,xl)
 		mx = mx + curr;
 	endfor
 	mx = mx/columns;	
-	disp(mx);
 	Sw = zeros (rows,rows);
-	Sb = Sw;
+	Sb = zeros (rows,rows);
 	for c = unique(xl)
 		indc = find(xl==c);
 		xc = X(:,indc);
 		mc = 0;
 		sc = size(xc);
 		nc = sc(2);
+		disp(nc);
 		for i = 1:nc
 			curr=xc(:,i);
 			mc = mc + curr;
 		endfor
 		mc = mc/nc;
 		A=xc;
-		for i = 1:nc
-			A(:,i)= X(:,i)-mc;
+		k=1;
+		for i = indc
+			A(:,k++)= X(:,i)-mc;
 		endfor
 		Ec=(A*A')/nc;
 		Sw = Sw + Ec;
