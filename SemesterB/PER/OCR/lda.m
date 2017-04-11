@@ -1,15 +1,16 @@
-#!/usr/bin/octave -qf
+%#!/usr/bin/octave -qf
 
-if(nargin!=2)
-	printf("Usage: script.m <matriz.mat.gz> <etiquetas.mat.gz>\n");
-	exit(1);
-end
+%if(nargin!=2)
+%	printf("Usage: script.m <matriz.mat.gz> <etiquetas.mat.gz>\n");
+%	exit(1);
+%end
 
-arglist = argv();
-file = arglist{1};
-load (file);
-file = arglist{2};
-load (file);
+%arglist = argv();
+%file = arglist{1};
+%load (file);
+%file = arglist{2};
+%load (file);
+
 
 function [W]=lda(X,xl)
 	k=size(X);
@@ -29,7 +30,7 @@ function [W]=lda(X,xl)
 		mc = 0;
 		sc = size(xc);
 		nc = sc(2);
-		disp(nc);
+%		disp(nc);
 		for i = 1:nc
 			curr=xc(:,i);
 			mc = mc + curr;
@@ -48,15 +49,17 @@ function [W]=lda(X,xl)
 	[V,lambda]=eig(Sb,Sw);
 	[L,I]=sort(-diag(lambda));
 	W=V(:,I);
-	disp(size(W));
+%	disp(size(W));
 	sxl = size(unique(xl));
 	dc = sxl(2);
 	W = W(:,1:dc-1);
 endfunction
-[ww]=lda(X,xl);
-	for i = 1:5
-		hh=ww(:,i);
-		xr=reshape(hh,16,16);
- 		imshow(xr',[min(min(xr)),max(max(xr))]);
-		ans = input("next image\n");
-	endfor
+
+
+%[ww]=lda(X,xl);
+%	for i = 1:5
+%		hh=ww(:,i);
+%		xr=reshape(hh,16,16);
+% 		imshow(xr',[min(min(xr)),max(max(xr))]);
+%		ans = input("next image\n");
+%	endfor
