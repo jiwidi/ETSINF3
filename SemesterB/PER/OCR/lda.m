@@ -51,7 +51,7 @@ function [W]=lda(X,xl)
 	W=V(:,I);
 %	disp(size(W));
 	sxl = size(unique(xl));
-	dc = sxl(2);
+	dc = min(sxl(2),(rows + 1));
 	W = W(:,1:dc-1);
 endfunction
 
