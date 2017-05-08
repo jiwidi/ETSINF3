@@ -1,0 +1,1606 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     65359,       1598]
+NotebookOptionsPosition[     63446,       1534]
+NotebookOutlinePosition[     64129,       1554]
+CellTagsIndexPosition[     64086,       1551]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Pr\[AAcute]ctica 2: Aut\[OAcute]matas Celulares", "Title",
+ CellChangeTimes->{
+  3.703073392697254*^9, {3.703073471959893*^9, 3.703073473403617*^9}, 
+   3.7030762541127405`*^9}],
+
+Cell["\<\
+Javier Rodr\[IAcute]guez Dom\[IAcute]nguez y Jaime Ferrando Huertas
+\
+\>", "Subsection",
+ CellChangeTimes->{
+  3.703073644232366*^9, {3.7030738676759825`*^9, 3.7030738684039354`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["I - Fundamentos b\[AAcute]sicos", "Chapter",
+ CellChangeTimes->{3.7030734181956224`*^9}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+
+Ejercicio 1:\
+\>", "Section",
+ CellChangeTimes->{{3.703073819189686*^9, 3.7030738268409367`*^9}}],
+
+Cell["\<\
+Dise\[NTilde]e un m\[OAcute]dulo Mathematica que, tomando como entrada los \
+siguientes par\[AAcute]metros, nos proporcione como salida la simulaci\
+\[OAcute]n del AC unidimensional correspondiente.
+\
+\>", "Text",
+ CellChangeTimes->{{3.70307384103362*^9, 3.703073857432212*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "M\[OAcute]dulo", " ", "para", " ", "calcular", " ", "la", " ", "reglas"}],
+    "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"NumToRegla", "[", "num_", "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"lista", ",", "numlist", ",", "i", ",", "base"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"lista", " ", "=", " ", 
+        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Pasamos", " ", "el", " ", "numero", " ", "a", " ", "binario", " ", 
+         "y", " ", "le", " ", "damos", " ", "la", " ", "vuelta"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"numlist", " ", "=", " ", 
+        RowBox[{"Reverse", "[", 
+         RowBox[{"IntegerDigits", "[", 
+          RowBox[{"num", ",", "2", ",", "8"}], "]"}], "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "Creamos", " ", "la", " ", "lista", " ", "de", " ", "binarios", " ", 
+         "de", " ", "0", " ", "a", " ", "7", " ", "y", " ", "le", " ", 
+         "asignamos", " ", "las", " ", "cifras", " ", "de", " ", "num", " ", 
+         "correspondientemente"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "\[LessEqual]", 
+          RowBox[{"Length", "[", "numlist", "]"}]}], ",", 
+         RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"base", " ", "=", " ", 
+           RowBox[{"Reverse", "[", 
+            RowBox[{"IntegerDigits", "[", 
+             RowBox[{
+              RowBox[{"i", "-", "1"}], ",", "2", ",", "3"}], "]"}], "]"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"lista", ",", 
+            RowBox[{"AppendTo", "[", 
+             RowBox[{"base", ",", 
+              RowBox[{"numlist", "[", 
+               RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], "]"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Return", "[", "lista", "]"}], ";"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.698563383557173*^9, 3.6985634525136237`*^9}, {
+   3.698563500690319*^9, 3.6985635023286057`*^9}, {3.698563586620903*^9, 
+   3.698563679715791*^9}, {3.698563710525403*^9, 3.6985638057233977`*^9}, {
+   3.698563837172061*^9, 3.698563888248639*^9}, {3.7030739999008665`*^9, 
+   3.7030740923042355`*^9}, 3.7030741717245426`*^9, {3.7030744878108315`*^9, 
+   3.703074490714182*^9}, {3.703074554128795*^9, 3.7030745985829773`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"NumToRegla", "[", "54", "]"}]}]], "Input",
+ CellChangeTimes->{{3.698563808017523*^9, 3.6985638177140446`*^9}, {
+   3.7030741065243053`*^9, 3.703074108742036*^9}, 3.703074156956035*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", "1", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "0"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6985638415752945`*^9, 3.698563892953681*^9}, 
+   3.703072881393205*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"NumToRegla", "[", "155", "]"}]}]], "Input",
+ CellChangeTimes->{{3.7030741406890173`*^9, 3.7030741585080385`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "0", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "1", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "1", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", "1", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "1", ",", "1"}], "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.703074147132843*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "M\[OAcute]dulo", " ", "para", " ", "clacular", " ", "un", " ", "paso", 
+    " ", "de", " ", "coputaci\[OAcute]n", " ", "a", " ", "partir", " ", "de", 
+    " ", "una", " ", "regla", " ", "y", " ", "una", " ", "entrada"}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"NextConfig", "[", 
+     RowBox[{"estado_", ",", "regla_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "lenestado", ",", "i", ",", "triplete", ",", "sol", ",", "result"}], 
+       "}"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"lenestado", " ", "=", " ", 
+        RowBox[{"Length", "[", "estado", "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"sol", " ", "=", " ", 
+        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{
+         "en", " ", "este", " ", "bucle", " ", "computamos", " ", "todos", 
+          " ", "los", " ", "tripletes", " ", "del", " ", "estado"}], ",", " ", 
+         RowBox[{
+         "teniendo", " ", "en", " ", "cuenta", " ", "la", " ", "barrera", " ",
+           "continua"}]}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "\[LessEqual]", "lenestado"}], ",", 
+         RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"i", "==", "1"}], ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"triplete", " ", "=", " ", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"estado", "[", 
+                 RowBox[{"[", "lenestado", "]"}], "]"}], ",", 
+                RowBox[{"estado", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], ",", 
+                RowBox[{"estado", "[", 
+                 RowBox[{"[", 
+                  RowBox[{"i", "+", "1"}], "]"}], "]"}], ",", "_"}], "}"}]}], 
+             ";"}], "\[IndentingNewLine]", ",", "\[IndentingNewLine]", 
+            RowBox[{
+             RowBox[{"If", "[", 
+              RowBox[{
+               RowBox[{"i", "==", "lenestado"}], ",", "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"triplete", " ", "=", " ", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"estado", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", "-", "1"}], "]"}], "]"}], ",", 
+                   RowBox[{"estado", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], ",", 
+                   RowBox[{"estado", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", "_"}], "}"}]}], 
+                ";"}], "\[IndentingNewLine]", ",", "\[IndentingNewLine]", 
+               RowBox[{
+                RowBox[{"triplete", " ", "=", " ", 
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"estado", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", "-", "1"}], "]"}], "]"}], ",", 
+                   RowBox[{"estado", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], ",", 
+                   RowBox[{"estado", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", "+", "1"}], "]"}], "]"}], ",", "_"}], 
+                  "}"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
+           "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+           "calculamos", " ", "el", " ", "caso", " ", "que", " ", 
+            "corresponde", " ", "a", " ", "cada", " ", "triplete"}], "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"result", " ", "=", " ", 
+           RowBox[{"Cases", "[", 
+            RowBox[{"regla", ",", "triplete"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+           "a\[NTilde]adimos", " ", "el", " ", "resultado", " ", "a", " ", 
+            "la", " ", "soluci\[OAcute]n"}], "*)"}], "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"sol", ",", 
+            RowBox[{
+             RowBox[{"result", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], "[", 
+             RowBox[{"[", "4", "]"}], "]"}]}], "]"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Return", "[", "sol", "]"}], ";"}]}], "\[IndentingNewLine]", 
+     "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.698563959998214*^9, 3.6985643846276093`*^9}, {
+   3.6985644247504077`*^9, 3.698564506365449*^9}, {3.698564620900408*^9, 
+   3.6985646231043615`*^9}, 3.703074165082472*^9, {3.7030746055780945`*^9, 
+   3.70307463312096*^9}, {3.7030747006288943`*^9, 3.7030747163810377`*^9}, {
+   3.7030749572313004`*^9, 3.703075021203035*^9}, 3.7030750837532783`*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"NextConfig", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "1", ",", "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "1", ",", 
+      "0"}], "}"}], ",", 
+    RowBox[{"NumToRegla", "[", "54", "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.6985645220521693`*^9, 3.6985645695093*^9}, {
+  3.6985646146304955`*^9, 3.698564670083509*^9}, {3.703075042461172*^9, 
+  3.703075054408684*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "1", ",", "1", ",", "1", ",", "1", ",", "0", ",", "1", ",", "1", ",", "1"}],
+   "}"}]], "Output",
+ CellChangeTimes->{
+  3.6985646260423183`*^9, {3.6985646583967266`*^9, 3.6985646721434803`*^9}, 
+   3.703072887130765*^9, 3.7030750448413897`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"NextConfig", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "1", ",", "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", "1", ",", 
+      "0"}], "}"}], ",", 
+    RowBox[{"NumToRegla", "[", "155", "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.703075067183385*^9, 3.7030750732922306`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0", ",", "0", ",", "0", ",", "1", ",", "1", ",", "1", ",", "0", ",", "0"}],
+   "}"}]], "Output",
+ CellChangeTimes->{3.703075074623096*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "M\[OAcute]dulo", " ", "que", " ", "simula", " ", "el", " ", 
+    "comportamiento", " ", "del", " ", "aut\[OAcute]mata", " ", "celular"}], 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Simulacion", "[", 
+     RowBox[{"inicial_", ",", "regla_", ",", "t_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"reglalist", ",", "i", ",", "print", ",", "estado"}], "}"}], 
+      ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"reglalist", "=", " ", 
+        RowBox[{"NumToRegla", "[", "regla", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"print", " ", "=", " ", 
+        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"estado", "=", "inicial"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"print", ",", "inicial"}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "por", " ", "cada", " ", "iteraci\[OAcute]n", " ", "calculamos", " ", 
+         "la", " ", "siguiente", " ", "configuraci\[OAcute]n"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "\[LessEqual]", "t"}], ",", 
+         RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"estado", " ", "=", " ", 
+           RowBox[{"NextConfig", "[", 
+            RowBox[{"estado", ",", "reglalist"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"print", ",", "estado"}], "]"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"mostramos", " ", "el", " ", "resultado"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"Return", "[", 
+        RowBox[{"ArrayPlot", "[", "print", "]"}], "]"}], ";"}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.6985647792825365`*^9, 3.698565066440388*^9}, {
+   3.6985651261953344`*^9, 3.6985651343191695`*^9}, 3.703075087150609*^9, {
+   3.7030751179019213`*^9, 3.70307514090856*^9}, {3.7030751758788624`*^9, 
+   3.703075217331242*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"Simulacion", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+      "0", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", 
+      "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
+     "}"}], ",", "77", ",", "22"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.703073311262683*^9, 3.7030733180159335`*^9}, 
+   3.703075724224991*^9}],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQB2JRIGZgxAJHBdEhViFMtUARRnS1jGCVDGjqICoZUdVB
+VTKgqIOpZERWB1fJgKQOoZKREYkJAGoWAsU=
+   "], {{0, 0}, {21, 23}}, {0, 1}],
+  Frame->Automatic,
+  FrameLabel->{None, None},
+  FrameTicks->{{None, None}, {None, None}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+    Automatic}]], "Output",
+ CellChangeTimes->{3.703073320471109*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"Simulacion", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+      "0", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", 
+      "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
+     "}"}], ",", "54", ",", "30"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.703075733950631*^9, 3.703075740878913*^9}, {
+  3.7030760455954084`*^9, 3.703076046140708*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[RasterBox[CompressedData["
+1:eJzdzt0NgDAIBODDHXw2ruQIXcD938Qfwh10AklozvYrdh/nMRYAm/fqbXYv
+T6Dk+etMcQpQylNK/5gpt9LxH9IVa+VLXFh1MVfdu1Ndn6fvK20TZ1NXbVZ3
+bLW6C9uL9i6WvgNd
+   "], {{0, 0}, {21, 31}}, {0, 1}],
+  Frame->Automatic,
+  FrameLabel->{None, None},
+  FrameTicks->{{None, None}, {None, None}},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{
+   "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+    Automatic}]], "Output",
+ CellChangeTimes->{3.70307574464321*^9, 3.7030760471854477`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{
+   "M\[OAcute]dulo", " ", "para", " ", "animar", " ", "los", " ", 
+    "aut\[OAcute]matas"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"SimulacionAnimate", "[", 
+     RowBox[{"inicial_", ",", "regla_", ",", "t_"}], "]"}], ":=", 
+    RowBox[{"Module", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+       "reglalist", ",", "i", ",", "print", ",", "estado", ",", "leninicial", 
+        ",", "sample", ",", " ", "j", ",", "frame"}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"reglalist", "=", " ", 
+        RowBox[{"NumToRegla", "[", "regla", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"print", " ", "=", " ", 
+        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"estado", "=", "inicial"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"leninicial", " ", "=", " ", 
+        RowBox[{"Length", "[", "inicial", "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"sample", " ", "=", " ", 
+        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"frame", " ", "=", " ", 
+        RowBox[{"{", "}"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{"creamos", " ", "listas", " ", "en", " ", "blanco"}], "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"j", "=", "1"}], ",", 
+         RowBox[{"j", "\[LessEqual]", "leninicial"}], ",", 
+         RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"sample", ",", "0"}], "]"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "hacemos", " ", "el", " ", "primer", " ", "frame", " ", "entero", " ",
+          "todo", " ", "blanco"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"j", "=", "1"}], ",", 
+         RowBox[{"j", "\[LessEqual]", "leninicial"}], ",", 
+         RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"frame", ",", "sample"}], "]"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"print", ",", " ", 
+         RowBox[{"ArrayPlot", "[", "frame", "]"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+        "en", " ", "cada", " ", "frame", " ", "entra", " ", "la", " ", 
+         "nueva", " ", "generaci\[OAcute]n", " ", "por", " ", "debajo", " ", 
+         "y", " ", "sale", " ", "la", " ", "nueva", " ", "por", " ", 
+         "arriba"}], "*)"}], "\[IndentingNewLine]", 
+       RowBox[{"For", "[", 
+        RowBox[{
+         RowBox[{"i", "=", "1"}], ",", 
+         RowBox[{"i", "\[LessEqual]", "t"}], ",", 
+         RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+         RowBox[{"(*", 
+          RowBox[{
+          "quitamos", " ", "la", " ", "generaci\[OAcute]n", " ", "mas", " ", 
+           "vieja"}], "*)"}], "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"frame", " ", "=", " ", 
+           RowBox[{"Rest", "[", "frame", "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{
+           "a\[NTilde]adimos", " ", "la", " ", "nueva", " ", 
+            "generaci\[OAcute]n"}], "*)"}], "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"frame", ",", "estado"}], "]"}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"(*", 
+           RowBox[{"computamos", " ", "la", " ", "siguiente"}], "*)"}], 
+          "\[IndentingNewLine]", 
+          RowBox[{"estado", " ", "=", " ", 
+           RowBox[{"NextConfig", "[", 
+            RowBox[{"estado", ",", "reglalist"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"AppendTo", "[", 
+           RowBox[{"print", ",", " ", 
+            RowBox[{"ArrayPlot", "[", "frame", "]"}]}], "]"}], ";"}]}], 
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Return", "[", 
+        RowBox[{"ListAnimate", "[", "print", "]"}], "]"}], ";"}]}], 
+     "\[IndentingNewLine]", "]"}]}], ";"}]}]], "Input",
+ CellChangeTimes->{{3.698565374098897*^9, 3.6985653761928625`*^9}, {
+   3.6985654088292665`*^9, 3.698565416064129*^9}, {3.6985654641152835`*^9, 
+   3.6985654789229994`*^9}, {3.698565540744893*^9, 3.698565829365692*^9}, {
+   3.698566984288561*^9, 3.698567002498392*^9}, {3.6991691989743347`*^9, 
+   3.699169199100811*^9}, 3.7030757518858795`*^9, {3.7030757826713943`*^9, 
+   3.7030758175271673`*^9}, {3.7030758512492437`*^9, 3.70307592559757*^9}, {
+   3.703075959483466*^9, 3.7030759807614603`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"SimulacionAnimate", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+      "0", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", 
+      "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
+     "}"}], ",", "77", ",", "22"}], "]"}]}]], "Input",
+ CellChangeTimes->{3.7030733510240602`*^9, 3.7030760095349655`*^9}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`i4$$ = 22, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {
+    "\"min\"" :> {$CellContext`i4$$ = 1}, 
+     "\"max\"" :> {$CellContext`i4$$ = 23}}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`i4$$], 1, ""}, 1, 23, 1}}, Typeset`size$$ = 
+    Automatic, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`i4$3076$$ = 0}, 
+    PaneBox[
+     PanelBox[
+      DynamicWrapperBox[GridBox[{
+         {
+          ItemBox[
+           ItemBox[
+            TagBox[
+             StyleBox[GridBox[{
+                {"\<\"\"\>", 
+                 AnimatorBox[Dynamic[$CellContext`i4$$], {1, 23, 1},
+                  AnimationRate->0.0029155963805249326`,
+                  AnimationRunTime->568.1183633804321,
+                  AnimationRunning->True,
+                  AnimationTimeIndex->7084.795406510519,
+                  
+                  AppearanceElements->{
+                   "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons",
+                     "DirectionButton"},
+                  AutoAction->False,
+                  DisplayAllSteps->True]}
+               },
+               AutoDelete->False,
+               
+               GridBoxAlignment->{
+                "Columns" -> {Right, {Left}}, "ColumnsIndexed" -> {}, 
+                 "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+               
+               GridBoxItemSize->{
+                "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+              "ListAnimateLabel",
+              StripOnInput->False],
+             {"ControlArea", Top}],
+            Alignment->{Automatic, Inherited},
+            StripOnInput->False],
+           Background->None,
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            StyleBox[
+             PaneBox[
+              TagBox[
+               PaneSelectorBox[{1->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWLGUTA0AQC62QOM
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 2->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGOEBijoLBDwC5KgOL
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 3->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWI4YARCOBsOkJijYFABAJlCA3g=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 4->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGKGAAQxgHBkCCcDYjQu0oGHAAAJXZA3U=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 5->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIoYIRCKA8KIIIwDrJaBjSVjIxIzFFABwAAex0DZA==
+
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 6->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGMGCAQwgXAmCCUB4jslpGFJUMSOoQKhkZkZijgLoA
+AHX6A18=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 7->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIwYESCYD4YIAQhXFS1DEgqGZHVwVUyIKlDqGRkRGKO
+ArIBAGBqA1A=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 8->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGIGBAgSABEEAWZICqZERVB1XJgKIOppIRWR1cJQOS
+OoRKRkYk5iggBgAAWY0DSQ==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 9->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIgYESDQBEgQBUECaCrZYCqZERVB1XJgKIOppIRWR1c
+JQOSOoRKRkYk5ihAAwBJKQM8
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 10->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRgYMyAgSR4MglehqGcEqGdDUQVQyoqqDqmRAUQdT
+yYisDq6SAUkdQiUjIxJzJAMAQJIDMw==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 11->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRmwQqxCmWqAII7paRrBKBjR1EJWMqOqgKhlQ1MFU
+MiKrg6tkQFKHUMnIiMQcIQAANVoDKA==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 12->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRiwQqyAjViFMtUARRnS1jGCVDGjqICoZUdVBVTKg
+qIOpZERWB1fJgKQOoZKREYk5/AAAKwkDHQ==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 13->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRiyQeEFGrEKYaoEijOhqGcEqGdDUQVQyoqqDqmRA
+UQdTyYisDq6SAUkdQiUjIxJzSAMAIZ8DEg==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 14->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRiyQQkFGrEKYaoEijOhqGcEqGdDUQVQyoqqDqmRA
+UQdTyYisDq6SAUkdQiUjIxJzqAAAGRwDBw==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 15->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRiyQFoKMWIUw1QJFGNHVMoJVMqCpg6hkRFUHVcmA
+og6mkhFZHVwlA5I6hEpGRiTmIAQAEYAC/A==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 16->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRiyQboKMWIUw1QJFGNHVMoJVMqCpg6hkRFUHVcmA
+og6mkhFZHVwlA5I6hEpGRiTmwAIACssC8Q==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 17->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRixwYAUZsQphqgWKMKKrZQSrZEBTB1HJiKoOqpIB
+RR1MJSOyOrhKBiR1CJWMjEhMugEABP0C5g==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 18->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRixwEAoyYhXCVAsUYURXywhWyYCmDqKSEVUdVCUD
+ijqYSkZkdXCVDEjqECoZGZGYtAAAABYC2w==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 19->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRixwqAgyYhXCVAsUYURXywhWyYCmDqKSEVUdVCUD
+ijqYSkZkdXCVDEjqECoZGZGYFAIA/AcC0A==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 20->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRixwSAsyYhXCVAsUYURXywhWyYCmDqKSEVUdVCUD
+ijqYSkZkdXCVDEjqECoZGZGYxAMA+O4CxQ==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 21->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRixw+AkyYhXCVAsUYURXywhWyYCmDqKSEVUdVCUD
+ijqYSkZkdXCVDEjqECoZGZGYWAEA9rwCug==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 22->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRixwhAgyYhXCVAsUYURXywhWyYCmDqKSEVUdVCUD
+ijqYSkZkdXCVDEjqECoZGZGYAPVxAq8=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 23->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRixwJAsyYhXCVAsUYURXywhWyYCmDqKSEVUdVCUD
+ijqYSkZkdXCVDEjqGBgA9QMCpQ==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}]}, Dynamic[$CellContext`i4$$],
+                Alignment->Automatic,
+                ImageSize->All,
+                TransitionDirection->Horizontal,
+                TransitionDuration->0.5,
+                TransitionEffect->Automatic],
+               Identity,
+               Editable->True,
+               Selectable->True],
+              ImageMargins->10],
+             Deployed->False,
+             StripOnInput->False,
+             ScriptLevel->0,
+             GraphicsBoxOptions->{PreserveImageOptions->True},
+             Graphics3DBoxOptions->{PreserveImageOptions->True}],
+            Identity,
+            Editable->False,
+            Selectable->False],
+           Alignment->{Left, Center},
+           Background->GrayLevel[1],
+           Frame->1,
+           FrameStyle->GrayLevel[0, 0.2],
+           ItemSize->Automatic,
+           StripOnInput->False]}
+        },
+        AutoDelete->False,
+        GridBoxAlignment->{
+         "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Top}}, 
+          "RowsIndexed" -> {}},
+        GridBoxDividers->{
+         "Columns" -> {{False}}, "ColumnsIndexed" -> {}, "Rows" -> {{False}}, 
+          "RowsIndexed" -> {}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.7], {
+             Offset[0.5599999999999999]}, 
+            Offset[0.7]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.4], {
+             Offset[0.8]}, 
+            Offset[0.4]}, "RowsIndexed" -> {}}], If[
+        And[
+         CurrentValue["NotebookSelected"], 
+         CurrentValue["SelectionOver"]], 
+        Manipulate`Dump`ReadControllerState[
+         Map[Manipulate`Dump`updateOneVar[#, 
+           CurrentValue["PreviousFormatTime"], 
+           CurrentValue["CurrentFormatTime"]]& , {
+           
+           Manipulate`Dump`controllerLink[{$CellContext`i4$$, \
+$CellContext`i4$3076$$}, "X1", 
+            If["DefaultAbsolute", True, "JB1"], False, {1, 23, 1}, 23, 1.]}], 
+         CurrentValue[{
+          "ControllerData", {
+           "Gamepad", "Joystick", "Multi-Axis Controller"}}], {}]],
+       ImageSizeCache->{393., {205.25, 212.25}}],
+      DefaultBaseStyle->{},
+      FrameMargins->{{5, 5}, {5, 5}}],
+     BaselinePosition->Automatic,
+     ImageMargins->0],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "ListAnimate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7030733525568705`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"SimulacionAnimate", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+     "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", 
+      "0", ",", "0", ",", "0", ",", "1", ",", "0", ",", "0", ",", "0", ",", 
+      "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], 
+     "}"}], ",", "54", ",", "30"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7030760193985467`*^9, 3.7030760339579177`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`i5$$ = 16, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {
+    "\"min\"" :> {$CellContext`i5$$ = 1}, 
+     "\"max\"" :> {$CellContext`i5$$ = 31}}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`i5$$], 1, ""}, 1, 31, 1}}, Typeset`size$$ = 
+    Automatic, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`i5$4799$$ = 0}, 
+    PaneBox[
+     PanelBox[
+      DynamicWrapperBox[GridBox[{
+         {
+          ItemBox[
+           ItemBox[
+            TagBox[
+             StyleBox[GridBox[{
+                {"\<\"\"\>", 
+                 AnimatorBox[Dynamic[$CellContext`i5$$], {1, 31, 1},
+                  AnimationRate->1.625292800000001,
+                  AnimationRunTime->48.608753669738775`,
+                  AnimationRunning->False,
+                  AnimationTimeIndex->9.231233508448476,
+                  
+                  AppearanceElements->{
+                   "ProgressSlider", "PlayPauseButton", "FasterSlowerButtons",
+                     "DirectionButton"},
+                  AutoAction->False,
+                  DisplayAllSteps->True]}
+               },
+               AutoDelete->False,
+               
+               GridBoxAlignment->{
+                "Columns" -> {Right, {Left}}, "ColumnsIndexed" -> {}, 
+                 "Rows" -> {{Baseline}}, "RowsIndexed" -> {}},
+               
+               GridBoxItemSize->{
+                "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+              "ListAnimateLabel",
+              StripOnInput->False],
+             {"ControlArea", Top}],
+            Alignment->{Automatic, Inherited},
+            StripOnInput->False],
+           Background->None,
+           StripOnInput->False]},
+         {
+          ItemBox[
+           TagBox[
+            StyleBox[
+             PaneBox[
+              TagBox[
+               PaneSelectorBox[{1->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWLGUTA0AQC62QOM
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 2->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGOEBijoLBDwC5KgOL
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 3->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGGEBmIwA2sVEwGAAAtDIDiA==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 4->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGKGCAYlSApABZFIvYKKAzAACxKAOG
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 5->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGCACxEDwYYIBiNFEMdYxY1Y0CWgIAp4wDgA==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 6->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGMGBAwggAkoYrQYhiqIOpxQTYxEYBVQAAo3sDfQ==
+
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 7->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGEADRMIwADEgYSRRDHSNWdTC1mACb2CggFQAAlY8D
+dA==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 8->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGIGBAwxAAkoRhBMBUh6wWFWCqg6nFBNjERgEeAACQ
+ywNw
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 9->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRkYQiYwhgAENQ0Ux1KGrZcRQiwow1cHUYgJsYqMA
+AgB+4wNk
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 10->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRiDCwEASKIWMIQBTHbpaBMBUh6wWFWCqg6nFBNjE
+RiAAAHnAA18=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 11->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGbJiRERtmxKKOEas6dLUIgKkOWS0qwFQHU4sJsIkN
+bwAAZDADUA==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 12->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIGRkZGTAwSR8fY1IEApjpGrOrQ1SIApjpktagAUx1M
+LSbAJjZsAABfAgNK
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 13->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGIGRAw0DIiAVjqGPArg4EMNUxYlWHrhYBMNUhq0UF
+mOpgajEBNrGhCABM2gM8
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 14->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIgYGRkRMFAEQYIiYwZMdSBMYY6TPOgmBGLOkas6tDV
+IgCmOmS1qABTHUwtJsAmNsgBAERDAzM=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 15->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRkYGRhANxyARqDgSBsugqIOIoKvDNA+KsaljhJmM
+oo4Rqzp0tQiAqQ5ZLSrAVAdTiwmwiQ0eAAA5CwMo
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 16->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRjDBCMdgHogNYsExI4Y6qAiaOogIujpM86AYmzpG
+mMko6hixqkNXiwCY6pDVogJMdTC1mACb2IAAADPHAyA=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 17->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGBkZGIAaz4DxGMJsRjYeiDqYWVR1UBE0dRARdHaZ5
+UIxNHSPMZBR1jFjVoatFAEx1yGpRAaY6mFpMgE2M1gAAK80DFg==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 18->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIgYARhRkYwhvIgfFQeI7I6OA9FHUwtqjqYuajqICLo
+6jDNQ3UfGmbEoo4Rqzp0tQiAqQ5ZLSrAVAdTiwmwiVERAAAfmAMJ
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 19->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRkYIBrHhPAYIH5WHpA5NLSMaD0UdTC2qOpi5qOog
+IujqMM1DdR8aZsSijhGrOnS1CICpDlktKsBUB1OLCbCJkQcAHo4DAg==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 20->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRhABZiCxgGwwBovAeAh1SDwkdWhqGdF4KOpgalHV
+wcxFVQcRQVeHaR6q+9AwIxZ1jFjVoatFAEx1yGpRAaY6mFpMgE2MIAAAFawC
+9g==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 21->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxtztENgDAIBNA7d3CAruQIXcD9/7SxCAeQXFLoK+mY9zUPAOcOQe746c26
+gZ5+F1+5C11wyTJ14syqs73qvkl2dZ/+L4WNY+uy9aouWq3qzNbqZrEeF+AC
+8A==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 22->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxtztENwCAIBFCuO3QAV+oILtD9/9pEkOOQ5BLQJ3HM95mXmd2ev+DJDgZ4
+ssO+5W47fpWOJnJiIVNxYauLvdWtE3V9X/2fBAeHo1Ob1R3bWt2F7UVnHwgN
+At8=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 23->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxtztENwCAIBFCuO3SArtQRXMD9/xqj9OCA5BLUJ/qM+Y7LzO4TAB52a/+E
+HU9hjY3d7+ItuvgCnVjIKjm32fnc7PaOujov/0+CxqF1alnVRZurOrdeHw94
+Atw=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 24->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJx9zssNwCAMA9C4O3SArtQRWID9b/0R2Q6oSEEGHoGj9bNtEbGPAp7pDZLu
+PIopTyMk8VTSf0+7Racv0BWLsjKX1l32dfftVDf38/+VwsJh6arlmJ1aH+Yu
+CZYC0w==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 25->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJydzsENwCAMA0C7O3SArtQRWID9f20FKLHDq5EsBTgCV+t3OwCcMwQ5E92b
+7wTaxWl1QOp+zJRb4fIL4czSVuKWVbfmqhs77uo8/Z+FG8etcxtVXbajHg6V
+As8=
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 26->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIgYIRiBIuRgZERihEsRrgsMgshi6mOUjNRdCHUIduA
+UIemlhGNh6IOphZVHcxcVHUQEXR1mOahug8NM2JRx4hVHbpaBEBTBwABOwLE
+
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 27->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRkYYRrBA4lCMYCFkGRmwqEVm0dJMFF0Idcg2INSh
+qWVE46Gog6lFVQczF1UdRARdHaZ5qO5Dw4xY1DFiVYeuFgQACskCww==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 28->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRhABZiCxgGwoRrBgsgwMSCyELBKL/mai6EKoQ7YB
+oQ5NLSMaD0UdTC2qOpi5qOogIujqMM1DdR8aZsSijhGbOgAGuALA
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 29->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGBkZGKEawgBgkw4DKQshiqmNgQGINEjNRdCHUIduA
+UIemlhGNh6IOphZVHcxcVHUQEXR1mOahug8NM2JRBwANMgK+
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 30->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWIgYIRiBIuRgZERihEsRrgsMgshi6luMJqJoguhDtkG
+hDo0tYxoPBR1MLWo6mDmoqqDiKCrwzQP1X2oGAABAQK5
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}], 31->
+                GraphicsBox[RasterBox[CompressedData["
+1:eJxTTMoPSmJiYGAQhWJGRkYYRrBA4lCMYCFkGRmwqEVmDTUzUXQh1CHbgFCH
+ppYRjYeiDqYWVR3MXFR1EBF0dZjmQTEAC2ICug==
+                  "], {{0, 0}, {21, 21}}, {0, 1}],
+                 Frame->Automatic,
+                 FrameLabel->{None, None},
+                 FrameTicks->{{None, None}, {None, None}},
+                 GridLinesStyle->Directive[
+                   GrayLevel[0.5, 0.4]],
+                 
+                 Method->{
+                  "DefaultBoundaryStyle" -> Automatic, "DefaultPlotStyle" -> 
+                   Automatic}]}, Dynamic[$CellContext`i5$$],
+                Alignment->Automatic,
+                ImageSize->All,
+                TransitionDirection->Horizontal,
+                TransitionDuration->0.5,
+                TransitionEffect->Automatic],
+               Identity,
+               Editable->True,
+               Selectable->True],
+              ImageMargins->10],
+             Deployed->False,
+             StripOnInput->False,
+             ScriptLevel->0,
+             GraphicsBoxOptions->{PreserveImageOptions->True},
+             Graphics3DBoxOptions->{PreserveImageOptions->True}],
+            Identity,
+            Editable->False,
+            Selectable->False],
+           Alignment->{Left, Center},
+           Background->GrayLevel[1],
+           Frame->1,
+           FrameStyle->GrayLevel[0, 0.2],
+           ItemSize->Automatic,
+           StripOnInput->False]}
+        },
+        AutoDelete->False,
+        GridBoxAlignment->{
+         "Columns" -> {{Left}}, "ColumnsIndexed" -> {}, "Rows" -> {{Top}}, 
+          "RowsIndexed" -> {}},
+        GridBoxDividers->{
+         "Columns" -> {{False}}, "ColumnsIndexed" -> {}, "Rows" -> {{False}}, 
+          "RowsIndexed" -> {}},
+        GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.7], {
+             Offset[0.5599999999999999]}, 
+            Offset[0.7]}, "ColumnsIndexed" -> {}, "Rows" -> {
+            Offset[0.4], {
+             Offset[0.8]}, 
+            Offset[0.4]}, "RowsIndexed" -> {}}], If[
+        And[
+         CurrentValue["NotebookSelected"], 
+         CurrentValue["SelectionOver"]], 
+        Manipulate`Dump`ReadControllerState[
+         Map[Manipulate`Dump`updateOneVar[#, 
+           CurrentValue["PreviousFormatTime"], 
+           CurrentValue["CurrentFormatTime"]]& , {
+           
+           Manipulate`Dump`controllerLink[{$CellContext`i5$$, \
+$CellContext`i5$4799$$}, "X1", 
+            If["DefaultAbsolute", True, "JB1"], False, {1, 31, 1}, 31, 1.]}], 
+         CurrentValue[{
+          "ControllerData", {
+           "Gamepad", "Joystick", "Multi-Axis Controller"}}], {}]],
+       ImageSizeCache->{393., {205.25, 212.25}}],
+      DefaultBaseStyle->{},
+      FrameMargins->{{5, 5}, {5, 5}}],
+     BaselinePosition->Automatic,
+     ImageMargins->0],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "ListAnimate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.7030760291989083`*^9, 3.7030760355646935`*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{958, 988},
+WindowMargins->{{-967, Automatic}, {Automatic, 0}},
+SpellingDictionaries->{"CorrectWords"->{
+ "correspondiente", "Dise\[NTilde]e", "par\[AAcute]metros", "unidimensional", 
+  "siguientes", "proporcione", "como", "salida", "simulaci\[OAcute]n", 
+  "entrada", "tomando", "que", "m\[OAcute]dulo", "un", "Fundamentos", 
+  "b\[AAcute]sicos", "Pr\[AAcute]ctica", "Aut\[OAcute]matas", "Celulares"}},
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (July 28, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 183, 3, 101, "Title"],
+Cell[766, 27, 193, 5, 79, "Subsection"],
+Cell[CellGroupData[{
+Cell[984, 36, 94, 1, 61, "Chapter"],
+Cell[CellGroupData[{
+Cell[1103, 41, 108, 4, 111, "Section"],
+Cell[1214, 47, 288, 6, 68, "Text"],
+Cell[1505, 55, 2701, 60, 240, "Input"],
+Cell[CellGroupData[{
+Cell[4231, 119, 242, 4, 50, "Input"],
+Cell[4476, 125, 779, 20, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5292, 150, 171, 3, 50, "Input"],
+Cell[5466, 155, 727, 19, 30, "Output"]
+}, Open  ]],
+Cell[6208, 177, 4910, 108, 449, "Input"],
+Cell[CellGroupData[{
+Cell[11143, 289, 453, 11, 50, "Input"],
+Cell[11599, 302, 286, 7, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11922, 314, 356, 9, 50, "Input"],
+Cell[12281, 325, 181, 5, 30, "Output"]
+}, Open  ]],
+Cell[12477, 333, 2282, 52, 297, "Input"],
+Cell[CellGroupData[{
+Cell[14784, 389, 496, 11, 50, "Input"],
+Cell[15283, 402, 481, 13, 407, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15801, 420, 519, 11, 50, "Input"],
+Cell[16323, 433, 545, 14, 447, "Output"]
+}, Open  ]],
+Cell[16883, 450, 4785, 104, 582, "Input"],
+Cell[CellGroupData[{
+Cell[21693, 558, 477, 10, 50, "Input"],
+Cell[22173, 570, 17879, 415, 454, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[40089, 990, 479, 10, 50, "Input"],
+Cell[40571, 1002, 22823, 526, 454, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
