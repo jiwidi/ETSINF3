@@ -1,0 +1,10 @@
+presupuesto BAC = Num modulos * coste modulos, 15*1200=180000
+Valor planificado VP = presupuesto-Costel real hasta la fecha=18000-7200=10800
+costel real CR= lo que diga el enunciado, 7200
+Valor ganado VG=lo que habrian costado de real los costel real, 7*1200 no da 7200, da 8400=8400
+Variación de costos CV=Valor ganado-Costel real=1200
+Indice de desempeño del costo CPI= Valor ganado/costel real=7/6
+Variación del cronograma SV=VG-VP = 8400-10800=-2400
+Indice del rendimiento del cronogramaSPI = VG/VP 8400/10800=0.7777777
+Estimacion de gasto hasta finalizar ETC=modulos que quedan x coste= 8*1200=9600
+Estomacion del coste final EAC con el etc=CR+ETC=16800
