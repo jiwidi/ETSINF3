@@ -21,16 +21,8 @@ def relevantNews(term,postingList):
         return []
 
 
-def applyOperator(list1,list2,operator,sign,postingList):
+def applyOperator(list1,list2,operator,sign,postingList,buffer):
     c=[]
-    buffer=[value for key,value in postingList.items()]
-    aux2 = []
-    for i in buffer:
-        aux2+= i
-    buffer=list(set([tuple(t) for t in aux2 ]))
-    for ind in range(0,len(buffer)):
-        buffer[ind]=list(buffer[ind])
-
     if operator=='AND':
         if sign=='YES':
             for e in list1:
@@ -53,6 +45,9 @@ def applyOperator(list1,list2,operator,sign,postingList):
             for e in list2:
                 if e in buffer:
                     buffer.remove(e)
+            for e in list1:
+                if e not in buffer:
+                    buffer.append(e)
 
             return buffer
         return c
@@ -155,6 +150,7 @@ def applyQuery(args,postingList):
     for i in buffer:
         aux2+= i
     buffer=list(set([tuple(t) for t in aux2 ]))
+    auxbuffer=buffer
     for ind in range(0,len(buffer)):
         buffer[ind]=list(buffer[ind])
     for arg in args:
@@ -166,7 +162,7 @@ def applyQuery(args,postingList):
             else:
                 sign='YES'
         else:
-            buffer=applyOperator(buffer,relevantNews(arg,postingList),operator,sign,postingList)
+            buffer=applyOperator(buffer,relevantNews(arg,postingList),operator,sign,postingList,auxbuffer)
             #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
             operator='AND'
             sign='YES'
@@ -180,6 +176,8 @@ def main():
     while(o==1):
         print("Welcome to the best fucking query manager bro")
         query=input("Type your query or : ").split()
+        if len(query)==0:
+            break;
         print("Resultado")
         print(len(applyQuery(query, postingList)))
         #showResult(applyQuery(query, postingList),query)
