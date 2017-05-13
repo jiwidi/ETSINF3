@@ -1,5 +1,6 @@
 import sys
 import os
+import pickle
 
 def procces(s):
     nonAlphanumericalCharacters= ['!', '@' ,'#','&' ,'(', ')', '–', '[', '{', '}', ']', ':', ';', "'",',', '?' ,'/' ,'*','"','.']
@@ -8,28 +9,38 @@ def procces(s):
     s=s.lower()
     return s
 
+def save_object(object, file_name):
+    with open(file_name, 'wb') as fh:
+        pickle.dump(object, fh)
+
 def main():
     direc=sys.argv[1]
+    dictDoc={}
     postingList={}
     finalName=sys.argv[2]
+    docid=0
     for filename in os.listdir(direc):
+        docid+=1
         print(filename)
+        dictDoc[filename]=docid
         aux=open(direc+'/'+filename,'r')
         raw=aux.read()
         rawlist=raw.split('<DOC>')
+        nnew=0
         for new in range(1,len(rawlist)):
-            Nid=rawlist[new][rawlist[new].find('<DOCID>')+len('<DOCID>'):rawlist[new].find('</DOCID>')]
+            nnew+=1
+            newid=[docid,nnew]
             Nrawtext=rawlist[new][rawlist[new].find('<TEXT>')+len('<TEXT>'):rawlist[new].find('</TEXT>')]
             Ntext=procces(Nrawtext)
             z=Ntext.split()
-            for w in z:
-                if w in list(postingList.keys()):
-                    postingList[w].append([Nid])
+            for term in z:
+                if term in list(postingList.keys()):
+                    if newid not in postingList[term]:
+                        postingList[term].append(newid)
                 else:
-                    postingList[w]=[Nid]
+                    postingList[term]=[newid]
         aux.close()
-        sys.exit()
-    for key in list(postingList.keys()):
-        print(key+'   '+str(postingList[key]))
+    save_object(finalName,postingList)
+    sys.exit()
 
 main()
