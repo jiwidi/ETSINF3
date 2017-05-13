@@ -2,7 +2,7 @@ import sys
 import os
 import pickle
 
-def procces(s):
+def process(s):
     nonAlphanumericalCharacters= ['+','!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
     for character in nonAlphanumericalCharacters:
         s=s.replace(character, ' ')
@@ -33,7 +33,7 @@ def main():
             nnew+=1
             newid=[docid,nnew]
             Nrawtext=rawlist[new][rawlist[new].find('<TEXT>')+len('<TEXT>'):rawlist[new].find('</TEXT>')]
-            Ntext=procces(Nrawtext)
+            Ntext=process(Nrawtext)
             z=Ntext.split()
             for term in z:
                 if term in list(postingList.keys()):
