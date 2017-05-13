@@ -29,7 +29,7 @@ def relevantNews(terms,postingList):
 
 def main():
     postingList=load_object(sys.argv[1])
-    query=str(sys.argv[2:])
+    query=str(sys.argv[2])
     n=relevantNews(query,postingList)
     print(len((n)))
 

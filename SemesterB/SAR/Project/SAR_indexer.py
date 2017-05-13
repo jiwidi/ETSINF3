@@ -3,7 +3,7 @@ import os
 import pickle
 
 def procces(s):
-    nonAlphanumericalCharacters= ['!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
+    nonAlphanumericalCharacters= ['+','!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
     for character in nonAlphanumericalCharacters:
         s=s.replace(character, ' ')
     s=s.lower()
