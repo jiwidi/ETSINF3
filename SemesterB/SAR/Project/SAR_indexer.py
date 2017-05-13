@@ -5,7 +5,7 @@ import pickle
 def procces(s):
     nonAlphanumericalCharacters= ['!', '@' ,'#','&' ,'(', ')', '–', '[', '{', '}', ']', ':', ';', "'",',', '?' ,'/' ,'*','"','.']
     for character in nonAlphanumericalCharacters:
-        s=s.replace(character, '')
+        s=s.replace(character, ' ')
     s=s.lower()
     return s
 
