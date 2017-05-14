@@ -2,7 +2,7 @@ import sys
 import os
 import pickle
 
-def process(s):
+def process(s,stopwords,stemming):
     nonAlphanumericalCharacters= ['+','!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
     for character in nonAlphanumericalCharacters:
         s=s.replace(character, ' ')
@@ -20,6 +20,12 @@ def main():
     dictDoc={}
     postingList={}
     finalName=sys.argv[2]
+    stopwords=False
+    stemming=False
+    if '-s' in sys.argv:
+        stopwords=True
+    if '-t' in sys.argv:
+        stemming=True
     docid=0
     for filename in sorted(os.listdir(direc)):
         docid+=1
@@ -33,8 +39,15 @@ def main():
             nnew+=1
             newid=[docid,nnew]
             Nrawtext=rawlist[new][rawlist[new].find('<TEXT>')+len('<TEXT>'):rawlist[new].find('</TEXT>')]
-            Ntext=process(Nrawtext)
+            Ntext=process(Nrawtext,stopwords,stemming)
             z=Ntext.split()
+            if (stopwords):
+                stopwordsEN = open('stopwords_en.txt', 'r')
+                listaSwordsEN = stopwordsEN.read().split('\n')
+                stopwordsES = open('stopwords_en.txt', 'r')
+                listaSwordsES = stopwordsES.read().split('\n')
+                listaSwords=listaSwordsEN+listaSwordsES
+                z = list(filter(lambda x: x not in listaSwords, z))
             for term in z:
                 if term in list(postingList.keys()):
                     if newid not in postingList[term]:
