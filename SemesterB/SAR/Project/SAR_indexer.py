@@ -79,7 +79,7 @@ def main():
         nnew=0
         for new in range(1,len(rawlist)):
             nnew+=1
-            newid=[docid,nnew]
+            newid=(docid,nnew)
             Nrawtext=rawlist[new][rawlist[new].find('<TEXT>')+len('<TEXT>'):rawlist[new].find('</TEXT>')]
             Ntext=process(Nrawtext)
             z=Ntext.split()
@@ -88,6 +88,8 @@ def main():
                 l.append(newid)
                 postingList[term] = l
         aux.close()
+    for www in postingList:
+        postingList[www]=set(postingList[www])
     print("Stemming...  ")
     keys=list(postingList.keys())
     stemmer = SnowballStemmer('spanish')

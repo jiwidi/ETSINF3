@@ -19,8 +19,11 @@ def load_object(file_name):
 
 def relevantNews(term,postingList):
     #Get relevant news indexed for a term
-    if term in list(postingList.keys()):
-        return postingList[term]
+    if term in postingList:
+        aux=list(postingList[term])
+        for idx, w in enumerate(aux):
+            aux[idx] = list(w)
+        return aux
     else:
         return []
 
@@ -32,7 +35,6 @@ def applyOperator(list1, list2, operator, sign, postingList, buffer):
             c = intersec(list1, list2)
         elif sign == 'NOT':
             c = andnot(list1, list2)
-
     elif operator == 'OR':
         if sign == 'YES':
             c = unionor(list1, list2)
@@ -220,7 +222,7 @@ def showResult(relevant,query):
                 parsed = parsed + str(e) + ' '
             print('...' + parsed + '...\n\n')
 
-def applyQuery(args,postingList,swords,doStemming):
+def applyQuery(args,postingList,swords):
     operator='AND'
     sign='YES'
     buffer=[value for key,value in postingList.items()]
@@ -247,6 +249,9 @@ def applyQuery(args,postingList,swords,doStemming):
                 operator='AND'
                 sign='YES'
                 q=True
+            else:
+                operator='AND'
+                sign='YES'
     if q:
         return buffer
     else:
@@ -268,17 +273,17 @@ def main():
         doSwords=True
     else:
         doSwords=False
-
-
+    print(len(relevantNews('casa',postingList)))
     print("Welcome to the best fucking query manager bro")
     print("Doing querys with : \n   Stemming: " + str(doStemming)+"\n   Remove stopwords: " + str(doSwords))
     while(1):
         query=input("Type your query or enter without typing to exit: ").split()
         if len(query)==0:
             break
-        print("Resultado")
-        print(len(applyQuery(query, postingList,doSwords,doStemming)))
-        #showResult(applyQuery(query, postingList),query)
+        showResult(applyQuery(query, postingList,doSwords),query)
+        print("Nº resultados")
+        print(len(applyQuery(query, postingList,doSwords)))
+
 
 
 
