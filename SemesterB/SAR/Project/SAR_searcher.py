@@ -3,9 +3,10 @@ import os
 import pickle
 
 def process(s):
-    nonAlphanumericalCharacters= ['1','2','3','4','5','6','7','8','9''0','+','!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
-    for character in nonAlphanumericalCharacters:
-        s=s.replace(character, ' ')
+    #nonAlphanumericalCharacters= ['1','2','3','4','5','6','7','8','9''0','+','!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
+    for character in s:
+        if not s.isalpha():
+            s=s.replace(character, ' ')
     s=s.lower()
     return s
 
