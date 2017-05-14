@@ -1,7 +1,8 @@
 import sys
 import os
 import pickle
-
+from nltk.corpus import stopwords
+from nltk.stem import SnowballStemmer
 def process(s):
     #Delete non alphanumerical characters
     for character in s:
@@ -174,11 +175,12 @@ def showResult(relevant,query):
                 parsed = parsed + str(e) + ' '
             print('...' + parsed + '...\n\n')
 
-def applyQuery(args,postingList):
+def applyQuery(args,postingList,swords):
     operator='AND'
     sign='YES'
     buffer=[value for key,value in postingList.items()]
     aux2 = []
+    q=False
     for i in buffer:
         aux2+= i
     buffer=list(set([tuple(t) for t in aux2 ]))
@@ -194,26 +196,43 @@ def applyQuery(args,postingList):
             else:
                 sign='YES'
         else:
-            bu=relevantNews(arg,postingList)
-            if bu!=[]:
-                buffer=applyOperator(buffer,bu,operator,sign,postingList,auxbuffer)
+            if ((not swords) or (not (arg in list(stopwords.words('spanish'))))):
+                buffer=applyOperator(buffer,relevantNews(arg,postingList),operator,sign,postingList,auxbuffer)
                 #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                 operator='AND'
                 sign='YES'
-    return buffer
+                q=True
+    if q:
+        return buffer
+    else:
+        return []
 
 
 
 def main():
-    postingList=load_object(sys.argv[1])
-    o=1
-    while(o==1):
-        print("Welcome to the best fucking query manager bro")
-        query=input("Type your query or : ").split()
+    ans = input("Apply stemming? yes/no: ")
+    if ans.lower() in ['yes','y']:
+        postingList = load_object(sys.argv[1])[1]
+        doStemming=True
+    else:
+        postingList = load_object(sys.argv[1])[0]
+        doStemming=False
+
+    ans2 = input("Remove stopwords from querys? yes/no: ")
+    if ans2.lower() in ['yes','y']:
+        doSwords=True
+    else:
+        doSwords=False
+
+
+    print("Welcome to the best fucking query manager bro")
+    print("Doing querys with : \n   Stemming: " + str(doStemming)+"\n   Remove stopwords: " + str(doSwords))
+    while(1):
+        query=input("Type your query or enter without typing to exit: ").split()
         if len(query)==0:
-            break;
+            break
         print("Resultado")
-        print(len(applyQuery(query, postingList)))
+        print(len(applyQuery(query, postingList,doSwords)))
         #showResult(applyQuery(query, postingList),query)
 
 

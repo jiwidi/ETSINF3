@@ -33,13 +33,6 @@ def main():
     dictDoc={}
     postingList={}
     finalName=sys.argv[2]
-    doSwords=False
-    doStemming=False
-    if '-s' in sys.argv:
-        doSwords=True
-    if '-t' in sys.argv:
-        doStemming=True
-        stemmer = SnowballStemmer('spanish')
     docid=0
     for filename in sorted(os.listdir(direc)):
         docid+=1
@@ -60,26 +53,21 @@ def main():
                 l.append(newid)
                 postingList[term] = l
         aux.close()
-    if (doSwords):
-        print("Removing stopwords....  ")
-        for word in stopwords.words('spanish'):
-            postingList.pop(word,None)
-        print("Done")
-    if (doStemming):
-        print("Stemming...  ")
-        keys=list(postingList.keys())
-        stemmingDicc = stemList(keys, stemmer)
-        for k in stemmingDicc:
-            newPL=[]
-            for w in stemmingDicc[k]:
-                for e in postingList[w]:
-                    if e not in newPL:
-                        newPL.append(e)
-            for ww in stemmingDicc[k]:
-                postingList[ww] = newPL
-        print("Done")
-
-    save_object(postingList,finalName)
+    print("Stemming...  ")
+    keys=list(postingList.keys())
+    stemmer = SnowballStemmer('spanish')
+    stemmingDicc = stemList(keys, stemmer)
+    postingListStem = {}
+    for k in stemmingDicc:
+        newPL=[]
+        for w in stemmingDicc[k]:
+            for e in postingList[w]:
+                if e not in newPL:
+                    newPL.append(e)
+        for ww in stemmingDicc[k]:
+            postingListStem[ww] = newPL
+    print("Done")
+    save_object((postingList,postingListStem),finalName)
     sys.exit()
 
 main()
