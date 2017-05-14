@@ -6,8 +6,8 @@ from nltk import word_tokenize
 from nltk.stem import SnowballStemmer
 
 def process(s):
-    nonAlphanumericalCharacters= ['1','2','3','4','5','6','7','8','9''0','+','!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
-    for character in nonAlphanumericalCharacters:
+    #Delete non alphanumerical characters
+    for character in s:
         if not character.isalpha():
             s=s.replace(character, ' ')
     s=s.lower()
