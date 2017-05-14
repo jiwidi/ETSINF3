@@ -3,19 +3,21 @@ import os
 import pickle
 
 def process(s):
-    #nonAlphanumericalCharacters= ['1','2','3','4','5','6','7','8','9''0','+','!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
+    #Delete non alphanumerical characters
     for character in s:
-        if not s.isalpha():
+        if not character.isalpha():
             s=s.replace(character, ' ')
     s=s.lower()
     return s
 
 def load_object(file_name):
+    #Load index file
     with open(file_name, 'rb') as fh:
         obj = pickle.load(fh)
     return obj
 
 def relevantNews(term,postingList):
+    #Get relevant news indexed for a term
     if term in list(postingList.keys()):
         return postingList[term]
     else:
@@ -33,6 +35,7 @@ def applyOperator(list1,list2,operator,sign,postingList,buffer):
 
 
 def intersec(list1,list2):
+    #Return the intersection of 2 list
     c=[]
     jj = 0
     kk = 0

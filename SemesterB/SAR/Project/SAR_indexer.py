@@ -6,9 +6,9 @@ from nltk import word_tokenize
 from nltk.stem import SnowballStemmer
 
 def process(s):
-    #nonAlphanumericalCharacters= ['1','2','3','4','5','6','7','8','9''0','+','!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
-    for character in s:
-        if not s.isalpha():
+    nonAlphanumericalCharacters= ['1','2','3','4','5','6','7','8','9''0','+','!','¡', '@' ,'#','&' ,'(', ')', '–','-', '[', '{', '}', ']', ':', ';', "'",',', '?','¿','/' ,'*','"','.']
+    for character in nonAlphanumericalCharacters:
+        if not character.isalpha():
             s=s.replace(character, ' ')
     s=s.lower()
     return s
@@ -61,12 +61,12 @@ def main():
                 postingList[term] = l
         aux.close()
     if (doSwords):
-        print("Removing stopwords")
+        print("Removing stopwords....  ")
         for word in stopwords.words('spanish'):
             postingList.pop(word,None)
         print("Done")
     if (doStemming):
-        print("Stemming...")
+        print("Stemming...  ")
         keys=list(postingList.keys())
         stemmingDicc = stemList(keys, stemmer)
         for k in stemmingDicc:
