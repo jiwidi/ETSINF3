@@ -194,10 +194,12 @@ def applyQuery(args,postingList):
             else:
                 sign='YES'
         else:
-            buffer=applyOperator(buffer,relevantNews(arg,postingList),operator,sign,postingList,auxbuffer)
-            #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
-            operator='AND'
-            sign='YES'
+            bu=relevantNews(arg,postingList)
+            if bu!=[]:
+                buffer=applyOperator(buffer,bu,operator,sign,postingList,auxbuffer)
+                #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
+                operator='AND'
+                sign='YES'
     return buffer
 
 
