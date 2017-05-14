@@ -23,8 +23,10 @@ def main():
     stopwords=False
     stemming=False
     if '-s' in sys.argv:
+        print("Deleting stopwords")
         stopwords=True
     if '-t' in sys.argv:
+        print("Stemming")
         stemming=True
     docid=0
     for filename in sorted(os.listdir(direc)):
@@ -49,11 +51,16 @@ def main():
                 listaSwords=listaSwordsEN+listaSwordsES
                 z = list(filter(lambda x: x not in listaSwords, z))
             for term in z:
-                if term in list(postingList.keys()):
-                    if newid not in postingList[term]:
-                        postingList[term].append(newid)
-                else:
-                    postingList[term]=[newid]
+                l = postingList.get(term, [])
+                l.append(newid)
+                postingList[term] = l
+                #print(l)
+                #sys.exit(0)
+                #if term in postingList:
+                #    if newid not in postingList[term]:
+                 #       postingList[term].append(newid)
+                #else:
+                #    postingList[term]=[newid]
         aux.close()
     save_object(postingList,finalName)
     sys.exit()
