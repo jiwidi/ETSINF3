@@ -25,35 +25,33 @@ def applyOperator(list1,list2,operator,sign,postingList,buffer):
     c=[]
     if operator=='AND':
         if sign=='YES':
-            for e in list1:
-                if e in list2:
-                    c.append(e)
-        elif sign=='NOT':
-            for e in list1:
-                if e not in list2:
-                    c.append(e)
-        return c
-    elif operator=='OR':
-        if sign=='YES':
-            for e in list1:
-                if e not in c:
-                    c.append(e)
-            for e in list2:
-                if e not in c:
-                    c.append(e)
-        elif sign=='NOT':
-            for e in list2:
-                if e in buffer:
-                    buffer.remove(e)
-            for e in list1:
-                if e not in buffer:
-                    buffer.append(e)
-
-            return buffer
-        return c
-    else:
-        return c
-
+            #for e in list1:
+                #if e in list2:
+                    #c.append(e)
+            c=intersec(list1,list2)
+    return c
+def intersec(list1,list2):
+    c=[]
+    jj = 0
+    kk = 0
+    list1 = sorted(list1)
+    list2 = sorted(list2)
+    while jj < len(list1) and kk < len(list2):
+        if list1[jj] == list2[kk]:
+            c.append(list1[jj])
+            jj += 1
+            kk += 1
+        else:
+            if list1[jj][0] < list2[kk][0]:
+                jj += 1
+            elif list1[jj][0] == list2[kk][0]:
+                if list1[jj][1] < list2[kk][1]:
+                    jj += 1
+                else:
+                    kk += 1
+            else:
+                kk += 1
+    return c
 def showResult(relevant,query):
     print(len(relevant))
     print(relevant)
