@@ -83,15 +83,15 @@ def main():
             Nrawtext=rawlist[new][rawlist[new].find('<TEXT>')+len('<TEXT>'):rawlist[new].find('</TEXT>')]
             Ntext=process(Nrawtext)
             z=Ntext.split()
-            for term in z:
+            for term in set(z):
                 l = postingList.get(term, [])
                 l.append(newid)
                 postingList[term] = l
         aux.close()
 
     #Remove duplicates
-    for www in postingList:
-        postingList[www]=set(postingList[www])
+    #for www in postingList:
+    #    postingList[www]=set(postingList[www])
 
 
     print("Stemming...  ")
