@@ -135,8 +135,8 @@ def ornot(list1,list2,buffer):
     return c
 
 def showResult(relevant,query):
+    print("Nº resultados")
     print(len(relevant))
-    print(relevant)
     if sys.argv[1] == "e":
         direc = "enero/"
     elif sys.argv[1] == "me":
@@ -287,8 +287,7 @@ def main():
         if len(query)==0:
             break
         showResult(applyQuery(query, postingList,doSwords,buffer),query)
-        print("Nº resultados")
-        print(len(applyQuery(query, postingList,doSwords,buffer)))
+
 
 
 
