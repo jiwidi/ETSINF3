@@ -27,6 +27,41 @@ def stemList(z,stemmer):
     return diccStem
 
 
+def unionor(list1, list2):
+    c = []
+    jj = 0
+    kk = 0
+    list1 = sorted(list1)
+    list2 = sorted(list2)
+    while jj < len(list1) and kk < len(list2):
+        if list1[jj] == list2[kk]:
+            c.append(list1[jj])
+            jj += 1
+            kk += 1
+        else:
+            if list1[jj][0] < list2[kk][0]:
+                c.append(list1[jj])
+                jj += 1
+            elif list1[jj][0] == list2[kk][0]:
+                if list1[jj][1] < list2[kk][1]:
+                    c.append(list1[jj])
+                    jj += 1
+                else:
+                    c.append(list2[kk])
+                    kk += 1
+            else:
+                c.append(list2[kk])
+                kk += 1
+    while jj < len(list1):
+        c.append(list1[jj])
+        jj += 1
+    while kk < len(list2):
+        c.append(list2[kk])
+        kk += 1
+
+    return c
+
+
 def main():
     print('Starting indexation')
     direc=sys.argv[1]
@@ -61,9 +96,7 @@ def main():
     for k in stemmingDicc:
         newPL=[]
         for w in stemmingDicc[k]:
-            for e in postingList[w]:
-                if e not in newPL:
-                    newPL.append(e)
+            newPL=unionor(newPL,postingList[w])
         for ww in stemmingDicc[k]:
             postingListStem[ww] = newPL
     print("Done")

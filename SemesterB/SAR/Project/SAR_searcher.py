@@ -25,13 +25,19 @@ def relevantNews(term,postingList):
         return []
 
 
-def applyOperator(list1,list2,operator,sign,postingList,buffer):
-    c=[]
-    if operator=='AND':
-        if sign=='YES':
-            c=intersec(list1,list2)
+def applyOperator(list1, list2, operator, sign, postingList, buffer):
+    c = []
+    if operator == 'AND':
+        if sign == 'YES':
+            c = intersec(list1, list2)
         elif sign == 'NOT':
-            c=andnot(list1,list2)
+            c = andnot(list1, list2)
+
+    elif operator == 'OR':
+        if sign == 'YES':
+            c = unionor(list1, list2)
+        elif sign == 'NOT':
+            c = ornot(list1, list2, buffer)
     return c
 
 
@@ -58,7 +64,6 @@ def intersec(list1,list2):
             else:
                 kk += 1
     return c
-
 
 def andnot(list1, list2):
     c = []
@@ -87,6 +92,46 @@ def andnot(list1, list2):
         jj += 1
 
     return c
+
+def unionor(list1, list2):
+    c = []
+    jj = 0
+    kk = 0
+    list1 = sorted(list1)
+    list2 = sorted(list2)
+    while jj < len(list1) and kk < len(list2):
+        if list1[jj] == list2[kk]:
+            c.append(list1[jj])
+            jj += 1
+            kk += 1
+        else:
+            if list1[jj][0] < list2[kk][0]:
+                c.append(list1[jj])
+                jj += 1
+            elif list1[jj][0] == list2[kk][0]:
+                if list1[jj][1] < list2[kk][1]:
+                    c.append(list1[jj])
+                    jj += 1
+                else:
+                    c.append(list2[kk])
+                    kk += 1
+            else:
+                c.append(list2[kk])
+                kk += 1
+    while jj < len(list1):
+        c.append(list1[jj])
+        jj += 1
+    while kk < len(list2):
+        c.append(list2[kk])
+        kk += 1
+
+    return c
+
+def ornot(list1,list2,buffer):
+    list2 = andnot(buffer,list2)
+    c = unionor(list1,list2)
+    return c
+
 def showResult(relevant,query):
     print(len(relevant))
     print(relevant)
@@ -175,7 +220,7 @@ def showResult(relevant,query):
                 parsed = parsed + str(e) + ' '
             print('...' + parsed + '...\n\n')
 
-def applyQuery(args,postingList,swords):
+def applyQuery(args,postingList,swords,doStemming):
     operator='AND'
     sign='YES'
     buffer=[value for key,value in postingList.items()]
@@ -232,7 +277,7 @@ def main():
         if len(query)==0:
             break
         print("Resultado")
-        print(len(applyQuery(query, postingList,doSwords)))
+        print(len(applyQuery(query, postingList,doSwords,doStemming)))
         #showResult(applyQuery(query, postingList),query)
 
 
