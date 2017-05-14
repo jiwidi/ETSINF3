@@ -88,8 +88,12 @@ def main():
                 l.append(newid)
                 postingList[term] = l
         aux.close()
+
+    #Remove duplicates
     for www in postingList:
         postingList[www]=set(postingList[www])
+
+
     print("Stemming...  ")
     keys=list(postingList.keys())
     stemmer = SnowballStemmer('spanish')

@@ -28,7 +28,7 @@ def relevantNews(term,postingList):
         return []
 
 
-def applyOperator(list1, list2, operator, sign, postingList, buffer):
+def applyOperator(list1, list2, operator, sign, buffer):
     c = []
     if operator == 'AND':
         if sign == 'YES':
@@ -222,18 +222,11 @@ def showResult(relevant,query):
                 parsed = parsed + str(e) + ' '
             print('...' + parsed + '...\n\n')
 
-def applyQuery(args,postingList,swords):
+def applyQuery(args,postingList,swords,buffer):
+    q=False
+    auxbuffer=buffer
     operator='AND'
     sign='YES'
-    buffer=[value for key,value in postingList.items()]
-    aux2 = []
-    q=False
-    for i in buffer:
-        aux2+= i
-    buffer=list(set([tuple(t) for t in aux2 ]))
-    auxbuffer=buffer
-    for ind in range(0,len(buffer)):
-        buffer[ind]=list(buffer[ind])
     for arg in args:
         if arg=='AND' or arg=='OR':
             operator = arg
@@ -244,7 +237,7 @@ def applyQuery(args,postingList,swords):
                 sign='YES'
         else:
             if ((not swords) or (not (arg in list(stopwords.words('spanish'))))):
-                buffer=applyOperator(buffer,relevantNews(arg,postingList),operator,sign,postingList,auxbuffer)
+                buffer=applyOperator(buffer,relevantNews(arg,postingList),operator,sign,auxbuffer)
                 #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                 operator='AND'
                 sign='YES'
@@ -260,12 +253,13 @@ def applyQuery(args,postingList,swords):
 
 
 def main():
+    item=load_object(sys.argv[1])
     ans = input("Apply stemming? yes/no: ")
     if ans.lower() in ['yes','y']:
-        postingList = load_object(sys.argv[1])[1]
+        postingList = item[1]
         doStemming=True
     else:
-        postingList = load_object(sys.argv[1])[0]
+        postingList = item[0]
         doStemming=False
 
     ans2 = input("Remove stopwords from querys? yes/no: ")
@@ -273,16 +267,28 @@ def main():
         doSwords=True
     else:
         doSwords=False
-    print(len(relevantNews('casa',postingList)))
+
+    # Prep the buffer for the querys
+    print("Loading buffer...")
+    buffer = [value for key, value in postingList.items()]
+    aux2 = []
+    for i in buffer:
+        aux2 += i
+    buffer = list(set([tuple(t) for t in aux2]))
+    for ind in range(0, len(buffer)):
+        buffer[ind] = list(buffer[ind])
+    print("Done")
     print("Welcome to the best fucking query manager bro")
     print("Doing querys with : \n   Stemming: " + str(doStemming)+"\n   Remove stopwords: " + str(doSwords))
+
+
     while(1):
         query=input("Type your query or enter without typing to exit: ").split()
         if len(query)==0:
             break
-        showResult(applyQuery(query, postingList,doSwords),query)
+        showResult(applyQuery(query, postingList,doSwords,buffer),query)
         print("Nº resultados")
-        print(len(applyQuery(query, postingList,doSwords)))
+        print(len(applyQuery(query, postingList,doSwords,buffer)))
 
 
 
