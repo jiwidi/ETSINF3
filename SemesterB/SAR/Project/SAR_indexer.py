@@ -69,9 +69,11 @@ def main():
     postingList={}
     finalName=sys.argv[2]
     docid=0
+    diccT={}
     for filename in sorted(os.listdir(direc)):
+        diccT[docid]=direc+filename
         docid+=1
-        print('Indexing file: '+filename)
+        print('Indexing file: '+direc+filename)
         dictDoc[filename]=docid
         aux=open(direc+'/'+filename,'r')
         raw=aux.read()
@@ -106,7 +108,7 @@ def main():
         for ww in stemmingDicc[k]:
             postingListStem[ww] = newPL
     print("Done")
-    save_object((postingList,postingListStem),finalName)
+    save_object((postingList,postingListStem,diccT),finalName)
     sys.exit()
 
 main()

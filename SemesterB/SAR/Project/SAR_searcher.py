@@ -134,20 +134,20 @@ def ornot(list1,list2,buffer):
     c = unionor(list1,list2)
     return c
 
-def showResult(relevant,query):
+def showResult(relevant,query,diccT):
     print("Nº resultados")
     print(len(relevant))
-    if sys.argv[1] == "e":
-        direc = "enero/"
-    elif sys.argv[1] == "me":
-        direc = "mini_enero/"
-    files = sorted(os.listdir(direc))
+    #if sys.argv[1] == "e":
+    #    direc = "enero/"
+    #elif sys.argv[1] == "me":
+    #    direc = "mini_enero/"
+    #files = sorted(os.listdir(direc))
 
     if len(relevant)<=2:
         #print(files)
         #print(relevant)
         for entry in relevant:
-            aux = open(direc+'/'+files[entry[0]-1])
+            aux = open(diccT[entry[0] - 1])
             raw = aux.read()
             rawlist = raw.split('<DOC>')
             index = entry[1]
@@ -164,7 +164,7 @@ def showResult(relevant,query):
             lrel = 10
         for doc in range(0,(lrel-1)):
             entry = relevant[doc]
-            aux = open(direc+'/'+files[entry[0]-1])
+            aux = open(diccT[entry[0] - 1])
             raw = aux.read()
             rawlist = raw.split('<DOC>')
             index = entry[1]
@@ -186,7 +186,7 @@ def showResult(relevant,query):
         l=0
         for entry in relevant:
             l+=1
-            aux = open(direc + '/' + files[entry[0] - 1])
+            aux = open(diccT[entry[0] - 1])
             raw = aux.read()
             rawlist = raw.split('<DOC>')
             index = entry[1]
@@ -254,6 +254,7 @@ def applyQuery(args,postingList,swords,buffer):
 
 def main():
     item=load_object(sys.argv[1])
+    diccT=item[2]
     ans = input("Apply stemming? yes/no: ")
     if ans.lower() in ['yes','y']:
         postingList = item[1]
@@ -286,7 +287,7 @@ def main():
         query=input("Type your query or enter without typing to exit: ").split()
         if len(query)==0:
             break
-        showResult(applyQuery(query, postingList,doSwords,buffer),query)
+        showResult(applyQuery(query, postingList,doSwords,buffer),query,diccT)
 
 
 
