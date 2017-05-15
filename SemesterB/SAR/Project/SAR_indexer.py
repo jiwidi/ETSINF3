@@ -149,6 +149,7 @@ def main():
             postingListStemTE[ww] = newPL
     print(len(postingListStemTE))
     print("Text stemmed")
+
     # Stemming title
     keys = list(postingListTI.keys())
     stemmingDiccTI = stemList(keys, stemmer)
@@ -159,6 +160,7 @@ def main():
         for ww in stemmingDiccTI[k]:
             postingListStemTI[ww] = newPL
     print("Titles stemmed")
+
     # Stemming category
     keys = list(postingListCA.keys())
     stemmingDiccCA = stemList(keys, stemmer)
@@ -169,8 +171,11 @@ def main():
         for ww in stemmingDiccCA[k]:
             postingListStemCA[ww] = newPL
     print("Categories stemmed")
+
     print("Done")
-    save_object( ( (postingListTE,postingListTI,postingListCA,postingListDA) , (postingListStemTE,postingListStemTI,postingListStemCA,postingListDA) ,diccT),finalName)
+    postingListRE=(postingListTE,postingListTI,postingListCA,postingListDA)
+    postingListStemRE=(postingListStemTE,postingListStemTI,postingListStemCA,postingListDA)
+    save_object( ( postingListRE, postingListStemRE ,diccT),finalName)
     sys.exit()
 
 main()
