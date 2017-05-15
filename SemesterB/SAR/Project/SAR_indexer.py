@@ -66,14 +66,22 @@ def main():
     print('Starting indexation')
     direc=sys.argv[1]
     dictDoc={}
-    postingList={}
+    postingListTE={}
+    postingListTI={}
+    postingListCA={}
+    postingListDA={}
+    postingListStemTE={}
+    postingListStemTI = {}
+    postingListStemCA = {}
+    postingListStemDA = {}
     finalName=sys.argv[2]
     docid=0
     diccT={}
+    stemmer = SnowballStemmer('spanish')
     for filename in sorted(os.listdir(direc)):
-        diccT[docid]=direc+filename
+        diccT[docid]=direc+'/'+filename
         docid+=1
-        print('Indexing file: '+direc+filename)
+        print('Indexing file: '+direc+'/'+filename)
         dictDoc[filename]=docid
         aux=open(direc+'/'+filename,'r')
         raw=aux.read()
@@ -82,33 +90,87 @@ def main():
         for new in range(1,len(rawlist)):
             nnew+=1
             newid=(docid,nnew)
+
+            #TEXT dicc
             Nrawtext=rawlist[new][rawlist[new].find('<TEXT>')+len('<TEXT>'):rawlist[new].find('</TEXT>')]
             Ntext=process(Nrawtext)
-            z=Ntext.split()
+            z = Ntext.split()
             for term in set(z):
-                l = postingList.get(term, [])
+                l = postingListTE.get(term, [])
                 l.append(newid)
-                postingList[term] = l
+                postingListTE[term] = l
+
+            #Title dicc
+            Nrawtext=rawlist[new][rawlist[new].find('<TITLE>') + len('<TITLE>'):rawlist[new].find('</TITLE>')]
+            Ntext = process(Nrawtext)
+            z = Ntext.split()
+            for term in set(z):
+
+                l = postingListTI.get(term, [])
+                l.append(newid)
+                postingListTI[term] = l
+
+            #Category dicc
+            Nrawtext =rawlist[new][rawlist[new].find('<CATEGORY>') + len('<CATEGORY>'):rawlist[new].find('</CATEGORY>')]
+            Ntext = process(Nrawtext)
+            z = Ntext.split()
+            for term in set(z):
+                l = postingListCA.get(term, [])
+                l.append(newid)
+                postingListCA[term] = l
+
+            #Date dicc
+            Nrawtext =rawlist[new][rawlist[new].find('<DATE>') + len('<DATE>'):rawlist[new].find('</DATE>')]
+            z = Nrawtext.split()
+            for term in set(z):
+                l = postingListDA.get(term, [])
+                l.append(newid)
+                postingListDA[term] = l
+
+
         aux.close()
 
-    #Remove duplicates
-    #for www in postingList:
-    #    postingList[www]=set(postingList[www])
 
 
     print("Stemming...  ")
-    keys=list(postingList.keys())
-    stemmer = SnowballStemmer('spanish')
-    stemmingDicc = stemList(keys, stemmer)
-    postingListStem = {}
-    for k in stemmingDicc:
+    print("1")
+
+    print(2)
+    #sys.exit()
+
+    #Stemming text
+    keys = list(postingListTE.keys())
+    stemmingDiccTE = stemList(keys, stemmer)
+    for k in stemmingDiccTE:
         newPL=[]
-        for w in stemmingDicc[k]:
-            newPL=unionor(newPL,postingList[w])
-        for ww in stemmingDicc[k]:
-            postingListStem[ww] = newPL
+        for w in stemmingDiccTE[k]:
+            newPL=unionor(newPL,postingListTE[w])
+        for ww in stemmingDiccTE[k]:
+            postingListStemTE[ww] = newPL
+    print(len(postingListStemTE))
+    print("Text stemmed")
+    # Stemming title
+    keys = list(postingListTI.keys())
+    stemmingDiccTI = stemList(keys, stemmer)
+    for k in stemmingDiccTI:
+        newPL = []
+        for w in stemmingDiccTI[k]:
+            newPL = unionor(newPL, postingListTI[w])
+        for ww in stemmingDiccTI[k]:
+            postingListStemTI[ww] = newPL
+    print("Titles stemmed")
+    # Stemming category
+    keys = list(postingListCA.keys())
+    stemmingDiccCA = stemList(keys, stemmer)
+    for k in stemmingDiccCA:
+        newPL = []
+        for w in stemmingDiccCA[k]:
+            newPL = unionor(newPL, postingListCA[w])
+        for ww in stemmingDiccCA[k]:
+            postingListStemCA[ww] = newPL
+    print("Categories stemmed")
     print("Done")
-    save_object((postingList,postingListStem,diccT),finalName)
+    save_object( ( (postingListTE,postingListTI,postingListCA,postingListDA) , (postingListStemTE,postingListStemTI,postingListStemCA,postingListDA) ,diccT),finalName)
     sys.exit()
 
 main()
