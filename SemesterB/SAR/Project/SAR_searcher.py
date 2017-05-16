@@ -60,17 +60,12 @@ def relevantNews(term,postingList,permutem):
         inte=False
     if(permutem):
         term = permute(term).strip()
-    if term in postingList:
-        if not permutem:
-            aux=list(postingList[term])
-            for idx, w in enumerate(aux):
-                aux[idx] = list(w)
-            return aux
-    elif permutem:
+
+    if permutem:
+        term = permute(term).strip()
         aux=[]
         o=0
         buffer=[]
-
         for key in postingList:
             if inte:
                 ad = len(key) == len(term) + cp.count('?')
@@ -89,6 +84,12 @@ def relevantNews(term,postingList,permutem):
                     buffer=buffer+aux
                     o+=1
         return buffer
+    elif term in postingList:
+        if not permutem:
+            aux=list(postingList[term])
+            for idx, w in enumerate(aux):
+                aux[idx] = list(w)
+            return aux
     else:
         return []
 
