@@ -77,6 +77,7 @@ def main():
     finalName=sys.argv[2]
     docid=0
     diccT={}
+    buffer=[]
     stemmer = SnowballStemmer('spanish')
     for filename in sorted(os.listdir(direc)):
         diccT[docid]=direc+'/'+filename
@@ -90,7 +91,7 @@ def main():
         for new in range(1,len(rawlist)):
             nnew+=1
             newid=(docid,nnew)
-
+            buffer.append(list(newid))
             #TEXT dicc
             Nrawtext=rawlist[new][rawlist[new].find('<TEXT>')+len('<TEXT>'):rawlist[new].find('</TEXT>')]
             Ntext=process(Nrawtext)
@@ -131,7 +132,7 @@ def main():
         aux.close()
 
 
-
+    print(len(buffer))
     print("Stemming...  ")
     print("1")
 
@@ -175,7 +176,7 @@ def main():
     print("Done")
     postingListRE=(postingListTE,postingListTI,postingListCA,postingListDA)
     postingListStemRE=(postingListStemTE,postingListStemTI,postingListStemCA,postingListDA)
-    save_object( ( postingListRE, postingListStemRE ,diccT),finalName)
+    save_object( ( postingListRE, postingListStemRE ,diccT,buffer),finalName)
     sys.exit()
 
 main()

@@ -307,15 +307,16 @@ def main():
     print(len(postingList[0]))
 
     # Prep the buffer for the querys
-    print("Loading buffer...")
-    buffer = [value for key, value in postingList[0].items()]
-    aux2 = []
-    for i in buffer:
-        aux2 += i
-    buffer = list(set([tuple(t) for t in aux2]))
-    for ind in range(0, len(buffer)):
-        buffer[ind] = list(buffer[ind])
-    print(len(buffer))
+    #print("Loading buffer...")
+    #buffer = [value for key, value in postingList[0].items()]
+    #aux2 = []
+    #for i in buffer:
+    #    aux2 += i
+    #buffer = list(set([tuple(t) for t in aux2]))
+    #for ind in range(0, len(buffer)):
+    #    buffer[ind] = list(buffer[ind])
+    #print(len(buffer))
+    buffer=item[3]
     print("Done")
     print("Welcome to the best fucking query manager bro")
     print("Doing querys with : \n   Stemming: " + str(doStemming)+"\n   Remove stopwords: " + str(doSwords))
