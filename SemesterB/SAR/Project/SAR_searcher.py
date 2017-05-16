@@ -17,13 +17,76 @@ def load_object(file_name):
         obj = pickle.load(fh)
     return obj
 
-def relevantNews(term,postingList):
+def permute(k):
+    if '*' in k:
+        if(k[0]=='*'):
+            if(k[-1]=='*'):
+                return k[1:-1]
+            else:
+                return k[1:]+'$'
+        elif(k[-1]=='*'):
+            return '$'+k[:-1]
+        else:
+            jj = 1
+            while (jj < len(k)-1):
+                if(k[jj]=='*'):
+                    break
+                jj += 1
+            return k[jj+1:] + '$' + k[:jj]
+    elif '?' in k:
+        if (k[0] == '?'):
+            return k[1:] + '$'
+        elif (k[-1] == '?'):
+            return '$' + k[:-1]
+        else:
+            jj = 1
+            while (jj < len(k)-1):
+                if(k[jj]=='?'):
+                    break
+                jj += 1
+            return k[jj + 1:] + '$' + k[:jj]
+    else:
+        return k
+
+
+def relevantNews(term,postingList,permutem):
     #Get relevant news indexed for a term
+    cp=term
+    if('?' in term):
+        inte=True
+    else:
+        inte=False
+    if(permutem):
+        term = permute(term).strip()
     if term in postingList:
-        aux=list(postingList[term])
-        for idx, w in enumerate(aux):
-            aux[idx] = list(w)
-        return aux
+        if not permutem:
+            aux=list(postingList[term])
+            for idx, w in enumerate(aux):
+                aux[idx] = list(w)
+            return aux
+    elif permutem:
+        aux=[]
+        o=0
+        buffer=[]
+
+        for key in postingList:
+            if inte:
+                ad = len(key) == len(term) + cp.count('?')
+            else:
+                ad=True
+            if key.startswith(term) and ad:
+                if (o==0):
+                    buffer = list(postingList[key])
+                    for idx, w in enumerate(buffer):
+                        buffer[idx] = list(w)
+                    o+=1
+                else:
+                    aux = list(postingList[key])
+                    for idx, w in enumerate(aux):
+                        aux[idx] = list(w)
+                    buffer=buffer+aux
+                    o+=1
+        return buffer
     else:
         return []
 
@@ -222,7 +285,11 @@ def showResult(relevant,query,diccT):
                 parsed = parsed + str(e) + ' '
             print('...' + parsed + '...\n\n')
 
-def applyQuery(args,postingList,swords,buffer):
+def applyQuery(args,postingListN,postingListST,swords,stemming,buffer,postingListPE):
+    if(stemming):
+        postingList=postingListST
+    else:
+        postingList=postingListN
     q=False
     auxbuffer=buffer
     operator='AND'
@@ -237,32 +304,53 @@ def applyQuery(args,postingList,swords,buffer):
                 sign='YES'
         elif "category:" in arg:
             te=arg.replace("category:","")
-            print(te)
-            if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
-                buffer=applyOperator(buffer,relevantNews(te,postingList[2]),operator,sign,auxbuffer)
-                #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
-                operator='AND'
-                sign='YES'
-                q=True
+            if '*' in te or '?' in te:
+                if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
+                    buffer = applyOperator(buffer, relevantNews(te, postingListPE[2],True), operator, sign, auxbuffer)
+                    # print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
+                    operator = 'AND'
+                    sign = 'YES'
+                    q = True
+                else:
+                    operator = 'AND'
+                    sign = 'YES'
             else:
-                operator='AND'
-                sign='YES'
+                if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
+                    buffer=applyOperator(buffer,relevantNews(te,postingList[2],False),operator,sign,auxbuffer)
+                    #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
+                    operator='AND'
+                    sign='YES'
+                    q=True
+                else:
+                    operator='AND'
+                    sign='YES'
         elif "headline:" in arg:
             te=arg.replace("headline:","")
-            if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
-                buffer=applyOperator(buffer,relevantNews(te,postingList[1]),operator,sign,auxbuffer)
-                #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
-                operator='AND'
-                sign='YES'
-                q=True
+            if '*' in te or '?' in te:
+                if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
+                    buffer = applyOperator(buffer, relevantNews(te, postingListPE[1], True), operator, sign, auxbuffer)
+                    # print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
+                    operator = 'AND'
+                    sign = 'YES'
+                    q = True
+                else:
+                    operator = 'AND'
+                    sign = 'YES'
             else:
-                operator='AND'
-                sign='YES'
+                if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
+                    buffer=applyOperator(buffer,relevantNews(te,postingList[1],False),operator,sign,auxbuffer)
+                    #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
+                    operator='AND'
+                    sign='YES'
+                    q=True
+                else:
+                    operator='AND'
+                    sign='YES'
         elif "date:" in arg:
             te=arg.replace("date:","")
             print(te)
             if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
-                buffer=applyOperator(buffer,relevantNews(te,postingList[3]),operator,sign,auxbuffer)
+                buffer=applyOperator(buffer,relevantNews(te,postingList[3],False),operator,sign,auxbuffer)
                 #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                 operator='AND'
                 sign='YES'
@@ -272,15 +360,26 @@ def applyQuery(args,postingList,swords,buffer):
                 sign='YES'
 
         else:
-            if ((not swords) or (not (arg in list(stopwords.words('spanish'))))):
-                buffer=applyOperator(buffer,relevantNews(arg,postingList[0]),operator,sign,auxbuffer)
-                #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
-                operator='AND'
-                sign='YES'
-                q=True
+            if '*' in arg or '?' in arg:
+                if ((not swords) or (not (arg in list(stopwords.words('spanish'))))):
+                    buffer = applyOperator(buffer, relevantNews(arg, postingListPE[0],True), operator, sign, auxbuffer)
+                    # print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
+                    operator = 'AND'
+                    sign = 'YES'
+                    q = True
+                else:
+                    operator = 'AND'
+                    sign = 'YES'
             else:
-                operator='AND'
-                sign='YES'
+                if ((not swords) or (not (arg in list(stopwords.words('spanish'))))):
+                    buffer=applyOperator(buffer,relevantNews(arg,postingList[0],False),operator,sign,auxbuffer)
+                    #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
+                    operator='AND'
+                    sign='YES'
+                    q=True
+                else:
+                    operator='AND'
+                    sign='YES'
     if q:
         return buffer
     else:
@@ -293,10 +392,8 @@ def main():
     diccT=item[2]
     ans = input("Apply stemming? yes/no: ")
     if ans.lower() in ['yes','y']:
-        postingList = item[1]
         doStemming=True
     else:
-        postingList = item[0]
         doStemming=False
 
     ans2 = input("Remove stopwords from querys? yes/no: ")
@@ -304,7 +401,6 @@ def main():
         doSwords=True
     else:
         doSwords=False
-    print(len(postingList[0]))
 
     # Prep the buffer for the querys
     #print("Loading buffer...")
@@ -326,7 +422,7 @@ def main():
         query=input("Type your query or enter without typing to exit: ").split()
         if len(query)==0:
             break
-        showResult(applyQuery(query, postingList,doSwords,buffer),query,diccT)
+        showResult(applyQuery(query,item[0],item[1],doSwords,doStemming,buffer,item[4]),query,diccT)
 
 
 

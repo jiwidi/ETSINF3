@@ -61,6 +61,11 @@ def unionor(list1, list2):
 
     return c
 
+def permuteTerm(term):
+    aux=[]
+    for idx in range(0,len(term)+1):
+        aux.append(term[idx:]+'$'+term[:idx])
+    return aux
 
 def main():
     print('Starting indexation')
@@ -70,6 +75,10 @@ def main():
     postingListTI={}
     postingListCA={}
     postingListDA={}
+    postingListTEPE={}
+    postingListTIPE={}
+    postingListCAPE={}
+    postingListDAPE={}
     postingListStemTE={}
     postingListStemTI = {}
     postingListStemCA = {}
@@ -100,16 +109,25 @@ def main():
                 l = postingListTE.get(term, [])
                 l.append(newid)
                 postingListTE[term] = l
+                permutems = permuteTerm(term)
+                for permutem in permutems:
+                    l = postingListTEPE.get(permutem, [])
+                    l.append(newid)
+                    postingListTEPE[permutem] = l
 
             #Title dicc
             Nrawtext=rawlist[new][rawlist[new].find('<TITLE>') + len('<TITLE>'):rawlist[new].find('</TITLE>')]
             Ntext = process(Nrawtext)
             z = Ntext.split()
             for term in set(z):
-
                 l = postingListTI.get(term, [])
                 l.append(newid)
                 postingListTI[term] = l
+                permutems = permuteTerm(term)
+                for permutem in permutems:
+                    l = postingListTIPE.get(permutem, [])
+                    l.append(newid)
+                    postingListTIPE[permutem] = l
 
             #Category dicc
             Nrawtext =rawlist[new][rawlist[new].find('<CATEGORY>') + len('<CATEGORY>'):rawlist[new].find('</CATEGORY>')]
@@ -119,6 +137,11 @@ def main():
                 l = postingListCA.get(term, [])
                 l.append(newid)
                 postingListCA[term] = l
+                permutems = permuteTerm(term)
+                for permutem in permutems:
+                    l = postingListCAPE.get(permutem, [])
+                    l.append(newid)
+                    postingListCAPE[permutem] = l
 
             #Date dicc
             Nrawtext =rawlist[new][rawlist[new].find('<DATE>') + len('<DATE>'):rawlist[new].find('</DATE>')]
@@ -132,11 +155,8 @@ def main():
         aux.close()
 
 
-    print(len(buffer))
-    print("Stemming...  ")
-    print("1")
 
-    print(2)
+    print("Stemming...  ")
     #sys.exit()
 
     #Stemming text
@@ -176,7 +196,8 @@ def main():
     print("Done")
     postingListRE=(postingListTE,postingListTI,postingListCA,postingListDA)
     postingListStemRE=(postingListStemTE,postingListStemTI,postingListStemCA,postingListDA)
-    save_object( ( postingListRE, postingListStemRE ,diccT,buffer),finalName)
+    postingListREPE=(postingListTEPE,postingListTIPE,postingListCAPE)
+    save_object( ( postingListRE, postingListStemRE ,diccT,buffer,postingListREPE),finalName)
     sys.exit()
 
 main()
