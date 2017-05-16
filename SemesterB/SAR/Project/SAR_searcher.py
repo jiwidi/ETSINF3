@@ -3,6 +3,8 @@ import os
 import pickle
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
+import time
+
 def process(s):
     #Delete non alphanumerical characters
     for character in s:
@@ -225,7 +227,7 @@ def showResult(relevant,query,diccT):
         lrel = len(relevant)
         if lrel>10:
             lrel = 10
-        for doc in range(0,(lrel-1)):
+        for doc in range(0,(lrel)):
             entry = relevant[doc]
             aux = open(diccT[entry[0] - 1])
             raw = aux.read()
@@ -307,7 +309,6 @@ def applyQuery(args,postingListN,postingListST,swords,stemming,buffer,postingLis
             if '*' in te or '?' in te:
                 if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
                     buffer = applyOperator(buffer, relevantNews(te, postingListPE[2],True), operator, sign, auxbuffer)
-                    # print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                     operator = 'AND'
                     sign = 'YES'
                     q = True
@@ -317,7 +318,6 @@ def applyQuery(args,postingListN,postingListST,swords,stemming,buffer,postingLis
             else:
                 if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
                     buffer=applyOperator(buffer,relevantNews(te,postingList[2],False),operator,sign,auxbuffer)
-                    #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                     operator='AND'
                     sign='YES'
                     q=True
@@ -329,7 +329,6 @@ def applyQuery(args,postingListN,postingListST,swords,stemming,buffer,postingLis
             if '*' in te or '?' in te:
                 if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
                     buffer = applyOperator(buffer, relevantNews(te, postingListPE[1], True), operator, sign, auxbuffer)
-                    # print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                     operator = 'AND'
                     sign = 'YES'
                     q = True
@@ -339,7 +338,6 @@ def applyQuery(args,postingListN,postingListST,swords,stemming,buffer,postingLis
             else:
                 if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
                     buffer=applyOperator(buffer,relevantNews(te,postingList[1],False),operator,sign,auxbuffer)
-                    #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                     operator='AND'
                     sign='YES'
                     q=True
@@ -351,7 +349,6 @@ def applyQuery(args,postingListN,postingListST,swords,stemming,buffer,postingLis
             print(te)
             if ((not swords) or (not (te in list(stopwords.words('spanish'))))):
                 buffer=applyOperator(buffer,relevantNews(te,postingList[3],False),operator,sign,auxbuffer)
-                #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                 operator='AND'
                 sign='YES'
                 q=True
@@ -363,7 +360,6 @@ def applyQuery(args,postingListN,postingListST,swords,stemming,buffer,postingLis
             if '*' in arg or '?' in arg:
                 if ((not swords) or (not (arg in list(stopwords.words('spanish'))))):
                     buffer = applyOperator(buffer, relevantNews(arg, postingListPE[0],True), operator, sign, auxbuffer)
-                    # print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                     operator = 'AND'
                     sign = 'YES'
                     q = True
@@ -373,7 +369,6 @@ def applyQuery(args,postingListN,postingListST,swords,stemming,buffer,postingLis
             else:
                 if ((not swords) or (not (arg in list(stopwords.words('spanish'))))):
                     buffer=applyOperator(buffer,relevantNews(arg,postingList[0],False),operator,sign,auxbuffer)
-                    #print('applying op'+' '+operator+' with sign: '+sign+' with argv: '+arg+' buffer count: '+str(len(buffer)))
                     operator='AND'
                     sign='YES'
                     q=True
@@ -402,27 +397,19 @@ def main():
     else:
         doSwords=False
 
-    # Prep the buffer for the querys
-    #print("Loading buffer...")
-    #buffer = [value for key, value in postingList[0].items()]
-    #aux2 = []
-    #for i in buffer:
-    #    aux2 += i
-    #buffer = list(set([tuple(t) for t in aux2]))
-    #for ind in range(0, len(buffer)):
-    #    buffer[ind] = list(buffer[ind])
-    #print(len(buffer))
     buffer=item[3]
-    print("Done")
-    print("Welcome to the best fucking query manager bro")
+    print("Welcome to query manager bro")
     print("Doing querys with : \n   Stemming: " + str(doStemming)+"\n   Remove stopwords: " + str(doSwords))
 
 
     while(1):
         query=input("Type your query or enter without typing to exit: ").split()
+        start=time.time()
         if len(query)==0:
             break
         showResult(applyQuery(query,item[0],item[1],doSwords,doStemming,buffer,item[4]),query,diccT)
+        end=time.time()
+        print("Time elapsed: "+str(end-start))
 
 
 

@@ -78,11 +78,9 @@ def main():
     postingListTEPE={}
     postingListTIPE={}
     postingListCAPE={}
-    postingListDAPE={}
     postingListStemTE={}
     postingListStemTI = {}
     postingListStemCA = {}
-    postingListStemDA = {}
     finalName=sys.argv[2]
     docid=0
     diccT={}
@@ -168,7 +166,6 @@ def main():
             newPL=unionor(newPL,postingListTE[w])
         for ww in stemmingDiccTE[k]:
             postingListStemTE[ww] = newPL
-    print(len(postingListStemTE))
     print("Text stemmed")
 
     # Stemming title
@@ -194,10 +191,11 @@ def main():
     print("Categories stemmed")
 
     print("Done")
+
+    print("Saving index in file: "+finalName)
     postingListRE=(postingListTE,postingListTI,postingListCA,postingListDA)
     postingListStemRE=(postingListStemTE,postingListStemTI,postingListStemCA,postingListDA)
     postingListREPE=(postingListTEPE,postingListTIPE,postingListCAPE)
     save_object( ( postingListRE, postingListStemRE ,diccT,buffer,postingListREPE),finalName)
-    sys.exit()
-
+    print("Done")
 main()
