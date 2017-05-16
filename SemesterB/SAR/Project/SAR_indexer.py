@@ -1,6 +1,7 @@
 import sys
 import os
 import pickle
+import time
 from nltk.corpus import stopwords
 from nltk import word_tokenize
 from nltk.stem import SnowballStemmer
@@ -68,6 +69,7 @@ def permuteTerm(term):
     return aux
 
 def main():
+    start=time.time()
     print('Starting indexation')
     direc=sys.argv[1]
     dictDoc={}
@@ -198,4 +200,7 @@ def main():
     postingListREPE=(postingListTEPE,postingListTIPE,postingListCAPE)
     save_object( ( postingListRE, postingListStemRE ,diccT,buffer,postingListREPE),finalName)
     print("Done")
+    end = time.time()
+    print("Time elapsed: " + str(end - start))
+
 main()
