@@ -59,6 +59,7 @@ def relevantNews(term,postingList,permutem):
     else:
         inte=False
     if permutem:
+        #We are doing a term query with tolerance
         term = permute(term).strip()
         aux=[]
         o=0
@@ -200,15 +201,8 @@ def ornot(list1,list2,buffer):
 def showResult(relevant,query,diccT):
     print("Nº resultados")
     print(len(relevant))
-    #if sys.argv[1] == "e":
-    #    direc = "enero/"
-    #elif sys.argv[1] == "me":
-    #    direc = "mini_enero/"
-    #files = sorted(os.listdir(direc))
 
     if len(relevant)<=2:
-        #print(files)
-        #print(relevant)
         for entry in relevant:
             aux = open(diccT[entry[0] - 1])
             raw = aux.read()
@@ -220,8 +214,6 @@ def showResult(relevant,query,diccT):
             print(Nrawtext + '\n\n')
 
     elif len(relevant)>5:
-        #print(files)
-        #print(relevant)
         lrel = len(relevant)
         if lrel>10:
             lrel = 10

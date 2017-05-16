@@ -19,6 +19,7 @@ def save_object(object, file_name):
         pickle.dump(object, fh)
 
 def stemList(z,stemmer):
+    #Returns a dicc with key stemmed and values terms before being stemmed
     diccStem={}
     for term in z:
         resul=stemmer.stem(term)
@@ -29,6 +30,7 @@ def stemList(z,stemmer):
 
 
 def unionor(list1, list2):
+    #list1 or list2
     c = []
     jj = 0
     kk = 0
@@ -63,6 +65,7 @@ def unionor(list1, list2):
     return c
 
 def permuteTerm(term):
+    #returns the resulting list of permuting a term
     aux=[]
     for idx in range(0,len(term)+1):
         aux.append(term[idx:]+'$'+term[:idx])
@@ -154,8 +157,10 @@ def main():
 
         aux.close()
 
-
-
+    end = time.time()
+    indxT=end-start
+    print("Time elapsed indexing: " + str(indxT))
+    start=time.time()
     print("Stemming...  ")
     #sys.exit()
 
@@ -201,6 +206,8 @@ def main():
     save_object( ( postingListRE, postingListStemRE ,diccT,buffer,postingListREPE),finalName)
     print("Done")
     end = time.time()
-    print("Time elapsed: " + str(end - start))
+    stemT=end-start
+    print("Time elapsed stemming: " + str(stemT))
+    print("Total time elapssed: "+str(stemT+indxT))
 
 main()
