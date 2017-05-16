@@ -58,9 +58,6 @@ def relevantNews(term,postingList,permutem):
         inte=True
     else:
         inte=False
-    if(permutem):
-        term = permute(term).strip()
-
     if permutem:
         term = permute(term).strip()
         aux=[]
